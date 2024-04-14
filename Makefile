@@ -6,7 +6,7 @@
 #    By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/14 14:29:18 by bthomas           #+#    #+#              #
-#    Updated: 2024/04/14 14:38:44 by bthomas          ###   ########.fr        #
+#    Updated: 2024/04/14 15:33:00 by bthomas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,4 +37,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all, clean, fclean, re
+.PHONY: all bonus clean fclean re
