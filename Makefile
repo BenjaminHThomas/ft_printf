@@ -6,34 +6,52 @@
 #    By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/14 14:29:18 by bthomas           #+#    #+#              #
-#    Updated: 2024/04/14 15:33:00 by bthomas          ###   ########.fr        #
+#    Updated: 2024/04/15 10:37:48 by bthomas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFILES = ./*.c
+NAME		= libftprintf.a
 
-OFILES = ./*.o
+CFILES		= ft_printf.c \
+			  ft_fmtparse.c \
+			  ft_utils.c
 
-CFLAGS = -Wall -Werror -Wextra
+OBJ_DIR		= objs
+OFILES		= $(addprefix $(OBJ_DIR)/,$(CFILES:.c=.o))
 
-NAME = libftprintf.a
+CFLAGS		= -Wall -Werror -Wextra
+COMPILER	= gcc
+AR			= ar
+ARFLAGS		= rcs
 
-COMPILER = gcc
+LIBFT_PATH	= ./libft
+LIBFT		= $(LIBFT_PATH)/libft.a
 
-$(NAME):
-	$(COMPILER) $(CFLAGS) -c $(CFILES) -I./
-	ar -rc $(NAME) $(OFILES)
+$(OBJ_DIR)/%.o: %.c
+	@mkdir -p $(@D)
+	$(COMPILER) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/%.o: $(LIBFT_PATH)/%.c
+	@mkdir -p $(@D)
+	$(COMPILER) $(CFLAGS) -c $< -o $@
+
+$(NAME): $(OFILES) $(LIBFT)
+	$(AR) $(ARFLAGS) $@ $^
+
+$(LIBFT):
+	$(MAKE) -C $(LIBFT_PATH)
 
 all: $(NAME)
 
 bonus: all
 
 clean:
-	rm -f $(NAME)
-	rm -f $(OFILES)
+	@rm -rf $(OBJ_DIR)
+	$(MAKE) -C $(LIBFT_PATH) clean
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
+	$(MAKE) -C $(LIBFT_PATH) fclean
 
 re: fclean all
 
