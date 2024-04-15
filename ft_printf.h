@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 18:20:12 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/14 15:41:13 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/15 10:01:24 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdlib.h> /* malloc & free*/
 # include <stdarg.h> /* variadics */
 # include <unistd.h> /* write */
+# include "libft/libft.h"
 
 # define INTMAX 2147483647
 # define INTMIN -2147483648
