@@ -6,7 +6,7 @@
 #    By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/14 14:29:18 by bthomas           #+#    #+#              #
-#    Updated: 2024/04/15 10:52:55 by bthomas          ###   ########.fr        #
+#    Updated: 2024/04/15 14:29:56 by bthomas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ AR				= ar
 ARFLAGS			= rcs
 
 LIBFT_PATH		= ./libft
-LIBFT			= $(LIBFT_PATH)/libft.a
+#LIBFT			= $(LIBFT_PATH)/libft.a
 LIBFT_OBJ_DIR	= $(LIBFT_PATH)/$(OBJ_DIR)
 LIBFT_CFILES	= $(wildcard $(LIBFT_PATH)/*.c)
 LIBFT_OFILES	= $(addprefix $(LIBFT_OBJ_DIR)/,$(notdir $(LIBFT_CFILES:.c=.o)))
@@ -38,11 +38,7 @@ $(LIBFT_OBJ_DIR)/%.o: $(LIBFT_PATH)/%.c
 	@mkdir -p $(@D)
 	$(COMPILER) $(CFLAGS) -c $< -o $@
 
-$(NAME): $(OFILES) $(LIBFT)
-	$(AR) $(ARFLAGS) $@ $^
-
-$(LIBFT): $(LIBFT_OFILES)
-	@mkdir -p $(LIBFT_OBJ_DIR)
+$(NAME): $(OFILES) $(LIBFT_OFILES)
 	$(AR) $(ARFLAGS) $@ $^
 
 all: $(NAME)
