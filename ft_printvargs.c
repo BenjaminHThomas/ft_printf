@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:34:05 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/16 16:41:17 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/16 18:02:52 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ static int	print_c(/*t_flags *flags,*/ va_list ap)
 	return (1);
 }
 
-int	ft_printvarg(char *fmt, /*t_flags *flags,*/ va_list ap)
+int	ft_printvarg(char **fmt, /*t_flags *flags,*/ va_list ap)
 {
 	int	len;
 
 	len = 0;
-	if (*fmt == 'c')
+	if (**fmt == 'c')
 		len += print_c(/*&flags,*/ ap);
-	else if (*fmt == 's')
+	else if (**fmt == 's')
 		len += print_s(/*&flags,*/ ap);
 	/*
 	else if (*fmt == 'p')
@@ -58,6 +58,6 @@ int	ft_printvarg(char *fmt, /*t_flags *flags,*/ va_list ap)
 	else if (*fmt == 'x' or *fmt == 'X')
 		len += print_x(*fmt, &flags, ap);
 	*/
-	fmt++;
+	(*fmt)++;
 	return (len);
 }

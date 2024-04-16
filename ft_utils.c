@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 14:47:46 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/16 16:41:11 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/16 18:02:06 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ void	putnbr_base(int n, int base)
 	write(1, &c, 1);
 }
 
-int	printf_atoi(char *str)
+int	printf_atoi(char **str)
 {
 	int	num;
 
-	num = ft_atoi(str);
-	while (ft_isdigit(*str))
-		str++;
+	num = ft_atoi(*str);
+	while (ft_isdigit(**str))
+		++(*str);
 	return (num);
 }
 
