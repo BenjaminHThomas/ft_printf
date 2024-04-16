@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 14:47:46 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/14 15:41:04 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/16 16:41:11 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,25 @@ void	putnbr_base(int n, int base)
 	c = n2 % base + '0';
 	write(1, &c, 1);
 }
-/*
-#include <stdio.h>
-int	main(void)
-{
-	char str[] = "wow 1 wow";
-	char c = '1';
 
-	printf("%d\n", in(str, c));
-	putnbr_base(12345, 16);
+int	printf_atoi(char *str)
+{
+	int	num;
+
+	num = ft_atoi(str);
+	while (ft_isdigit(*str))
+		str++;
+	return (num);
+}
+
+int	is_printable(char c)
+{
+	unsigned char	c2;
+
+	c2 = c;
+	if (c2 >= 32 && c2 <= 126)
+		return (1);
+	if (c2 >= 9 && c2 <= 13)
+		return (1);
 	return (0);
 }
-*/

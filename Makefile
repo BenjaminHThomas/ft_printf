@@ -6,7 +6,7 @@
 #    By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/14 14:29:18 by bthomas           #+#    #+#              #
-#    Updated: 2024/04/15 14:29:56 by bthomas          ###   ########.fr        #
+#    Updated: 2024/04/16 16:02:34 by bthomas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,18 +14,18 @@ NAME			= libftprintf.a
 
 CFILES			= ft_printf.c \
 				  ft_fmtparse.c \
-				  ft_utils.c
+				  ft_utils.c \
+				  ft_printvargs.c
 
 OBJ_DIR			= objs
 OFILES			= $(addprefix $(OBJ_DIR)/,$(CFILES:.c=.o))
 
-CFLAGS			= -Wall -Werror -Wextra
+CFLAGS			= -Wall -Werror -Wextra -g3
 COMPILER		= gcc
 AR				= ar
 ARFLAGS			= rcs
 
 LIBFT_PATH		= ./libft
-#LIBFT			= $(LIBFT_PATH)/libft.a
 LIBFT_OBJ_DIR	= $(LIBFT_PATH)/$(OBJ_DIR)
 LIBFT_CFILES	= $(wildcard $(LIBFT_PATH)/*.c)
 LIBFT_OFILES	= $(addprefix $(LIBFT_OBJ_DIR)/,$(notdir $(LIBFT_CFILES:.c=.o)))

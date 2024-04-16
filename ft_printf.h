@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 18:20:12 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/15 10:01:24 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/16 16:41:14 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define INTMAX 2147483647
 # define INTMIN -2147483648
 # define SPECS "cspdiuxX" /* ft_printf specifiers */
+# define FLAG_CHARS ".-+ #0"
 
 /* **** Structs ****/
 
@@ -43,5 +44,10 @@ typedef struct s_flags
 /* **** prototypes **** */
 int		in(char const *s, char c);
 void	putnbr_base(int n, int base);
+int		ft_printf(const char *fmt, ...);
+int		printf_atoi(char *str);
+int		ft_printvarg(char *fmt,/* t_flags *flags,*/ va_list ap);
+int		is_printable(char c);
+int		ft_fmtparse(char *fmt, va_list ap);
 
 #endif
