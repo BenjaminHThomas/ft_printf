@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:34:05 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/16 18:25:16 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/17 10:20:33 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,31 @@ static int	print_s(/*t_flags *flags,*/ va_list ap)
 
 static int	print_c(/*t_flags *flags,*/ va_list ap)
 {
-	char	c;
+	unsigned char	c;
 
 	c = va_arg(ap, int);
 	ft_putchar_fd(c, 1);
 	return (1);
+}
+
+static int	print_digit(va_list ap)
+{
+	char	*numstr;
+	int		i;
+	int		len;
+
+	len = 0;
+	i = va_arg(ap, int);
+	numstr = ft_itoa(i);
+	if (!numstr)
+		return (0);
+	while (*numstr)
+	{
+		ft_putchar_fd(*numstr, 1);
+		len++;
+		numstr++;
+	}
+	return (len);
 }
 
 int	ft_printvarg(char **fmt, /*t_flags *flags,*/ va_list ap)
@@ -46,14 +66,11 @@ int	ft_printvarg(char **fmt, /*t_flags *flags,*/ va_list ap)
 		len += print_c(/*&flags,*/ ap);
 	else if (**fmt == 's')
 		len += print_s(/*&flags,*/ ap);
-	/*
-	else if (*fmt == 'p')
-		len += print_p(&flags, ap);
-	else if (*fmt == 'd')
-		len += print_d(&flags, ap);
-	else if (*fmt == 'i')
-		len += print_i(&flags, ap);
-	else if (*fmt == 'u')
+	//else if (*fmt == 'p')
+	//	len += print_p(&flags, ap);
+	else if (**fmt == 'd' || **fmt == 'i')
+		len += print_digit(/*&flags,*/ ap);
+	/*else if (*fmt == 'u')
 		len += print_u(&flags, ap);
 	else if (*fmt == 'x' or *fmt == 'X')
 		len += print_x(*fmt, &flags, ap);

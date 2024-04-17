@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 09:40:24 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/16 18:14:32 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/17 10:13:47 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ static void	process_flags(char **fmt, t_flags *flags)
 		if (**fmt == '.')
 		{
 			(*fmt)++;
-			flags->prec_val = printf_atoi(fmt);
+			if (ft_isdigit(**fmt))
+				flags->prec_val = printf_atoi(fmt);
+			else
+				flags->prec_val = 0;
 		}
 		if (**fmt == '-')
 			flags->b_minus = 1;
