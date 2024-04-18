@@ -6,7 +6,7 @@
 #    By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/14 14:29:18 by bthomas           #+#    #+#              #
-#    Updated: 2024/04/16 16:02:34 by bthomas          ###   ########.fr        #
+#    Updated: 2024/04/18 19:31:38 by bthomas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ NAME			= libftprintf.a
 CFILES			= ft_printf.c \
 				  ft_fmtparse.c \
 				  ft_utils.c \
-				  ft_printvargs.c
+				  ft_printvargs.c \
+				  print_p.c
 
 OBJ_DIR			= objs
 OFILES			= $(addprefix $(OBJ_DIR)/,$(CFILES:.c=.o))

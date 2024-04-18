@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 18:20:12 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/16 17:56:01 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/18 19:44:10 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 # define INTMIN -2147483648
 # define SPECS "cspdiuxX" /* ft_printf specifiers */
 # define FLAG_CHARS ".-+ #0"
+# define HEX_BASE "0123456789abcdef"
+# define DEC_base "0123456789"
+# define OCT_base "01234567"
 
 /* **** Structs ****/
 
@@ -43,11 +46,12 @@ typedef struct s_flags
 
 /* **** prototypes **** */
 int		in(char const *s, char c);
-void	putnbr_base(int n, int base);
+void	putnbr_base(long n, char *strbase, int *len);
 int		ft_printf(const char *fmt, ...);
 int		printf_atoi(char **str);
 int		ft_printvarg(char **fmt,/* t_flags *flags,*/ va_list ap);
 int		is_printable(char c);
 int		ft_fmtparse(char *fmt, va_list ap);
+int		print_p(va_list ap);
 
 #endif

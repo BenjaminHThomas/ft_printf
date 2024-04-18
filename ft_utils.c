@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 14:47:46 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/16 18:02:06 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/18 19:44:40 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,23 @@ int	in(char const *s, char c)
 	return (0);
 }
 
-void	putnbr_base(int n, int base)
+void	putnbr_base(long n, char *strbase, int *len)
 {
 	long int	n2;
 	char		c;
+	int			base;
 
+	base = ft_strlen(strbase);
 	n2 = n;
 	if (n < 0)
 	{
 		write(1, "-", 1);
 		n2 *= -1;
 	}
-	if (n2 > base)
-		putnbr_base(n2 / base, base);
-	c = n2 % base + '0';
+	if (n2 >= base)
+		putnbr_base(n2 / base, strbase, len);
+	c = strbase[n2 % base];
+	(*len)++;
 	write(1, &c, 1);
 }
 
