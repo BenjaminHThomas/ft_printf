@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printvargs.c                                    :+:      :+:    :+:   */
+/*   print_digits.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 14:34:05 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/19 12:13:02 by bthomas          ###   ########.fr       */
+/*   Created: 2024/04/19 12:08:38 by bthomas           #+#    #+#             */
+/*   Updated: 2024/04/19 12:10:26 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printvarg(char **fmt, /*t_flags *flags,*/ va_list ap)
+int	print_digit(va_list ap)
 {
-	int	len;
+	char	*numstr;
+	int		i;
+	int		len;
 
 	len = 0;
-	if (**fmt == 'c')
-		len += print_c(/*&flags,*/ ap);
-	else if (**fmt == 's')
-		len += print_s(/*&flags,*/ ap);
-	else if (**fmt == 'p')
-		len += print_p(/*&flags, */ap);
-	else if (**fmt == 'd' || **fmt == 'i')
-		len += print_digit(/*&flags,*/ ap);
-	/*else if (*fmt == 'u')
-		len += print_u(&flags, ap);
-	else if (*fmt == 'x' or *fmt == 'X')
-		len += print_x(*fmt, &flags, ap);
-	*/
+	i = va_arg(ap, int);
+	numstr = ft_itoa(i);
+	if (!numstr)
+		return (0);
+	while (*numstr)
+	{
+		ft_putchar_fd(*numstr, 1);
+		len++;
+		numstr++;
+	}
 	return (len);
 }

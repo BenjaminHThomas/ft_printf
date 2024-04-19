@@ -6,7 +6,7 @@
 #    By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/14 14:29:18 by bthomas           #+#    #+#              #
-#    Updated: 2024/04/18 19:31:38 by bthomas          ###   ########.fr        #
+#    Updated: 2024/04/19 12:10:12 by bthomas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,9 @@ CFILES			= ft_printf.c \
 				  ft_fmtparse.c \
 				  ft_utils.c \
 				  ft_printvargs.c \
-				  print_p.c
+				  print_p.c \
+				  print_chars.c \
+				  print_digits.c
 
 OBJ_DIR			= objs
 OFILES			= $(addprefix $(OBJ_DIR)/,$(CFILES:.c=.o))
