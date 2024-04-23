@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 14:47:46 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/23 19:48:36 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/23 19:52:20 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,4 @@ int	is_printable(char c)
 	if (c2 >= 9 && c2 <= 13)
 		return (1);
 	return (0);
-}
-
-#include <stdio.h>
-void	print_flags(t_flags *flags)
-{
-	printf("minus: %d\n", flags->b_minus);
-	printf("plus: %d\n", flags->b_plus);
-	printf("space: %d\n", flags->b_space);
-	printf("hash: %d\n", flags->b_hash);
-	printf("zero: %d\n", flags->b_zero);
-	printf("width: %d\n", flags->width_val);
-	printf("precision: %d\n", flags->prec_val);
-	printf("specifier: %c\n", flags->specifier);
 }

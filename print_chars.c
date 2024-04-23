@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:52:09 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/23 19:50:54 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/23 19:57:55 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,25 @@ static int	ft_putstr(char *s, int limit)
 	return (len);
 }
 
+static int	init_len(char *s, t_flags *flags)
+{
+	int	len;
+	int	prec;
+
+	prec = flags->prec_val;
+	len = ft_strlen(s);
+	if (prec == -1 || prec > len)
+		return (len);
+	return (prec);
+}
+
 int	print_s(t_flags *flags, va_list ap)
 {
 	char	*str;
 	int		len;
 
 	str = va_arg(ap, char *);
-	len = ft_strlen(str);
-	if (flags->prec_val != -1)
-		len = flags->prec_val;
+	len = init_len(str, flags);
 	if (flags->b_minus)
 	{
 		len = ft_putstr(str, flags->prec_val);
