@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 18:20:12 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/23 18:15:50 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/23 18:31:10 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # define SPECS "cspdiuxX" /* ft_printf specifiers */
 # define FLAG_CHARS ".-+ #0"
 # define HEX_BASE "0123456789abcdef"
-# define DEC_base "0123456789"
-# define OCT_base "01234567"
+# define DEC_BASE "0123456789"
+# define OCT_BASE "01234567"
 
 /* **** Structs ****/
 
@@ -58,6 +58,5 @@ int		print_c(t_flags *flags, va_list ap);
 int		print_digit(va_list ap);
 void	print_flags(t_flags *flags);
 void	pad_output(char c, int n);
-
 
 #endif

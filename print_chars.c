@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:52:09 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/23 18:22:21 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/23 18:32:54 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,16 +79,13 @@ int	print_c(t_flags *flags, va_list ap)
 			pad_output(32, width - 1);
 			len = width;
 		}
-
+		return (len);
 	}
-	else
+	if (width > 1)
 	{
-		if (width > 1)
-		{
-			pad_output(32, width - 1);
-			len = width;
-		}
-		ft_putchar_fd(c, 1);
+		pad_output(32, width - 1);
+		len = width;
 	}
+	ft_putchar_fd(c, 1);
 	return (len);
 }
