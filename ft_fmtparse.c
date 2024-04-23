@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 09:40:24 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/19 12:11:53 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/23 14:44:14 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,33 +24,54 @@ static void	reset_flags(t_flags *flags)
 	flags->specifier = 0;
 }
 
-static void	process_flags(char **fmt, t_flags *flags)
+static void	parse_prec(char **fmt, t_flags *flags, va_list ap)
+{
+	(*fmt)++;
+	if (**fmt == '*')
+	{
+		flags->prec_val = va_arg(ap, int);
+		(*fmt)++;
+		return ;
+	}
+	if (ft_isdigit(**fmt))
+		flags->prec_val = printf_atoi(fmt);
+	else
+		flags->prec_val = 0;
+}
+
+static void	parse_width(char **fmt, t_flags *flags, va_list ap)
+{
+	if (**fmt == '*')
+	{
+		flags->width_val = va_arg(ap, int);
+		(*fmt)++;
+	}
+	else
+		flags->width_val = printf_atoi(fmt);
+}
+
+static void	process_flags(char **fmt, t_flags *flags, va_list ap)
 {
 	reset_flags(flags);
-	if (ft_isdigit(**fmt))
-		flags->width_val = printf_atoi(fmt);
 	while (in(FLAG_CHARS, **fmt))
 	{
-		if (**fmt == '.')
-		{
-			(*fmt)++;
-			if (ft_isdigit(**fmt))
-				flags->prec_val = printf_atoi(fmt);
-			else
-				flags->prec_val = 0;
-		}
 		if (**fmt == '-')
 			flags->b_minus = 1;
 		if (**fmt == '+')
 			flags->b_plus = 1;
+		if (**fmt == '0')
+			flags->b_zero = 1;
 		if (**fmt == 32)
 			flags->b_space = 1;
 		if (**fmt == '#')
 			flags->b_hash = 1;
-		if (**fmt == '0')
-			flags->b_zero = 1;
-		fmt++;
+		(*fmt)++;
 	}
+	if (ft_isdigit(**fmt) || **fmt == '*')
+		parse_width(fmt, flags, ap);
+	if (**fmt == '.')
+		parse_prec(fmt, flags, ap);
+	print_flags(flags); /* for testing - to be removed */
 }
 
 int	ft_fmtparse(char *fmt, va_list ap)
@@ -63,7 +84,7 @@ int	ft_fmtparse(char *fmt, va_list ap)
 	{
 		if (*fmt == '%' && *(fmt++))
 		{
-			process_flags(&fmt, &flags);
+			process_flags(&fmt, &flags, ap);
 			len += ft_printvarg(&fmt/*, &flags*/, ap);
 		}
 		else

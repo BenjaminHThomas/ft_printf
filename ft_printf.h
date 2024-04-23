@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 18:20:12 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/19 12:12:52 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/23 14:39:01 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,6 @@ int		print_p(va_list ap);
 int		print_s(/*t_flags *flags,*/ va_list ap);
 int		print_c(/*t_flags *flags,*/ va_list ap);
 int		print_digit(va_list ap);
+void	print_flags(t_flags *flags);
 
 #endif
