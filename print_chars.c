@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:52:09 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/23 18:32:54 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/23 19:50:54 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,21 @@ void	pad_output(char c, int n)
 	}
 }
 
-static void	ft_putstr(char *s)
+static int	ft_putstr(char *s, int limit)
 {
 	int	len;
 
 	len = 0;
-	while (*s)
+	if (limit == -1)
+		limit = ft_strlen(s);
+	while (*s && limit)
 	{
 		ft_putchar_fd(*s, 1);
 		len++;
 		s++;
+		limit--;
 	}
+	return (len);
 }
 
 int	print_s(t_flags *flags, va_list ap)
@@ -41,25 +45,25 @@ int	print_s(t_flags *flags, va_list ap)
 
 	str = va_arg(ap, char *);
 	len = ft_strlen(str);
+	if (flags->prec_val != -1)
+		len = flags->prec_val;
 	if (flags->b_minus)
 	{
-		ft_putstr(str);
+		len = ft_putstr(str, flags->prec_val);
 		if (flags->width_val > len)
 		{
 			pad_output(32, flags->width_val - len);
-			len += flags->width_val - len;
+			len = flags->width_val;
 		}
+		return (len);
 	}
-	else
+	if (flags->width_val > len)
 	{
-		if (flags->width_val > len)
-		{
-			pad_output(32, flags->width_val - len);
-			len += flags->width_val - len;
-		}
-		ft_putstr(str);
+		pad_output(32, flags->width_val - len);
+		ft_putstr(str, flags->prec_val);
+		return (flags->width_val);
 	}
-	return (len);
+	return (ft_putstr(str, flags->prec_val));
 }
 
 int	print_c(t_flags *flags, va_list ap)

@@ -6,11 +6,19 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 14:47:46 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/23 14:38:40 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/23 19:48:36 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+char	get_padder(t_flags *flags)
+{
+	if (flags->b_zero)
+		return ('0');
+	else
+		return (32);
+}
 
 int	in(char const *s, char c)
 {
