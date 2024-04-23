@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:52:09 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/23 19:57:55 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/23 20:05:22 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int	print_s(t_flags *flags, va_list ap)
 	int		len;
 
 	str = va_arg(ap, char *);
+	if (!str)
+		str = "(null)";
 	len = init_len(str, flags);
 	if (flags->b_minus)
 	{
