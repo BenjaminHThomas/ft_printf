@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 18:20:12 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/23 14:39:01 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/23 18:15:50 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,15 @@ int		in(char const *s, char c);
 void	putnbr_base(long n, char *strbase, int *len);
 int		ft_printf(const char *fmt, ...);
 int		printf_atoi(char **str);
-int		ft_printvarg(char **fmt,/* t_flags *flags,*/ va_list ap);
+int		ft_printvarg(char **fmt, t_flags *flags, va_list ap);
 int		is_printable(char c);
 int		ft_fmtparse(char *fmt, va_list ap);
 int		print_p(va_list ap);
-int		print_s(/*t_flags *flags,*/ va_list ap);
-int		print_c(/*t_flags *flags,*/ va_list ap);
+int		print_s(t_flags *flags, va_list ap);
+int		print_c(t_flags *flags, va_list ap);
 int		print_digit(va_list ap);
 void	print_flags(t_flags *flags);
+void	pad_output(char c, int n);
+
 
 #endif

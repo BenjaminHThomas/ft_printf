@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 09:40:24 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/23 14:44:14 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/23 18:28:22 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	process_flags(char **fmt, t_flags *flags, va_list ap)
 		parse_width(fmt, flags, ap);
 	if (**fmt == '.')
 		parse_prec(fmt, flags, ap);
-	print_flags(flags); /* for testing - to be removed */
+	//print_flags(flags); /* for testing - to be removed */
 }
 
 int	ft_fmtparse(char *fmt, va_list ap)
@@ -85,7 +85,7 @@ int	ft_fmtparse(char *fmt, va_list ap)
 		if (*fmt == '%' && *(fmt++))
 		{
 			process_flags(&fmt, &flags, ap);
-			len += ft_printvarg(&fmt/*, &flags*/, ap);
+			len += ft_printvarg(&fmt, &flags, ap);
 		}
 		else
 		{
