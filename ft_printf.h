@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 18:20:12 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/24 09:56:19 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/24 18:20:54 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,13 @@ int		ft_fmtparse(char *fmt, va_list ap);
 int		print_p(t_flags *flags, va_list ap);
 int		print_s(t_flags *flags, va_list ap);
 int		print_c(t_flags *flags, va_list ap);
-int		print_digit(va_list ap);
+int		print_digit(t_flags *flags, va_list ap);
 void	print_flags(t_flags *flags);
 void	pad_output(char c, int n);
 char	get_padder(t_flags *flags);
 int		printf_putstr(char *s, int limit, int null_cmp);
 void	pad_output(char c, int n);
 int		init_len(char *s, t_flags *flags);
+int		max(int n1, int n2);
 
 #endif

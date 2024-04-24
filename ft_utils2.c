@@ -6,11 +6,20 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:05:55 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/24 10:23:55 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/24 20:32:58 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+int	max(int n1, int n2)
+{
+	if (!n1 && !n2)
+		return (0);
+	if (n1 > n2)
+		return (n1);
+	return (n2);
+}
 
 int	printf_putstr(char *s, int limit, int null_cmp)
 {
