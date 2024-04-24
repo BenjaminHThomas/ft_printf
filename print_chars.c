@@ -6,76 +6,57 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:52:09 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/23 20:05:22 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/24 10:23:08 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	pad_output(char c, int n)
-{
-	while (n)
-	{
-		ft_putchar_fd(c, 1);
-		n--;
-	}
-}
-
-static int	ft_putstr(char *s, int limit)
+int	print_s_left(t_flags *flags, char *str, int null_cmp)
 {
 	int	len;
 
-	len = 0;
-	if (limit == -1)
-		limit = ft_strlen(s);
-	while (*s && limit)
+	len = printf_putstr(str, flags->prec_val, null_cmp);
+	if (flags->width_val > len)
 	{
-		ft_putchar_fd(*s, 1);
-		len++;
-		s++;
-		limit--;
+		pad_output(32, flags->width_val - len);
+		len = flags->width_val;
 	}
 	return (len);
 }
 
-static int	init_len(char *s, t_flags *flags)
+int	print_s_right(t_flags *flags, char *str, int null_cmp)
 {
 	int	len;
-	int	prec;
 
-	prec = flags->prec_val;
-	len = ft_strlen(s);
-	if (prec == -1 || prec > len)
-		return (len);
-	return (prec);
+	len = init_len(str, flags);
+	if (flags->width_val > len)
+	{
+		pad_output(32, flags->width_val - len);
+		printf_putstr(str, flags->prec_val, null_cmp);
+		return (flags->width_val);
+	}
+	return (printf_putstr(str, flags->prec_val, null_cmp));
 }
 
 int	print_s(t_flags *flags, va_list ap)
 {
 	char	*str;
-	int		len;
+	int		null_cmp;
 
 	str = va_arg(ap, char *);
 	if (!str)
+		null_cmp = 0;
+	if (!str && (flags->prec_val >= 6 || flags->prec_val == -1))
 		str = "(null)";
-	len = init_len(str, flags);
+	else if (!str)
+		str = "";
+	else
+		null_cmp = 1;
 	if (flags->b_minus)
-	{
-		len = ft_putstr(str, flags->prec_val);
-		if (flags->width_val > len)
-		{
-			pad_output(32, flags->width_val - len);
-			len = flags->width_val;
-		}
-		return (len);
-	}
-	if (flags->width_val > len)
-	{
-		pad_output(32, flags->width_val - len);
-		ft_putstr(str, flags->prec_val);
-		return (flags->width_val);
-	}
-	return (ft_putstr(str, flags->prec_val));
+		return (print_s_left(flags, str, null_cmp));
+	else
+		return (print_s_right(flags, str, null_cmp));
 }
 
 int	print_c(t_flags *flags, va_list ap)

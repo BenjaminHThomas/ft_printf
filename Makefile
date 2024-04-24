@@ -6,7 +6,7 @@
 #    By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/14 14:29:18 by bthomas           #+#    #+#              #
-#    Updated: 2024/04/19 12:10:12 by bthomas          ###   ########.fr        #
+#    Updated: 2024/04/24 08:07:31 by bthomas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME			= libftprintf.a
 CFILES			= ft_printf.c \
 				  ft_fmtparse.c \
 				  ft_utils.c \
+				  ft_utils2.c \
 				  ft_printvargs.c \
 				  print_p.c \
 				  print_chars.c \
