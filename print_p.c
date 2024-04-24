@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 18:43:33 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/18 19:44:18 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/24 07:41:32 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ int	print_p(va_list ap)
 	int					len;
 
 	address = (long unsigned int)va_arg(ap, void *);
+	if (!address)
+	{
+		write(1, "(nil)", 5);
+		return (5);
+	}
 	len = 2;
 	write(1, "0x", 2);
 	putnbr_base(address, HEX_BASE, &len);
