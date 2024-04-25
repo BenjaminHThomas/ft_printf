@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 09:40:24 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/23 18:28:22 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/25 13:05:37 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void	reset_flags(t_flags *flags)
 	flags->b_zero = 0;
 	flags->width_val = 0;
 	flags->prec_val = -1;
+	flags->b_uns = 0;
 	flags->specifier = 0;
 }
 
@@ -71,7 +72,6 @@ static void	process_flags(char **fmt, t_flags *flags, va_list ap)
 		parse_width(fmt, flags, ap);
 	if (**fmt == '.')
 		parse_prec(fmt, flags, ap);
-	//print_flags(flags); /* for testing - to be removed */
 }
 
 int	ft_fmtparse(char *fmt, va_list ap)

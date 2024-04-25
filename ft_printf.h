@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 18:20:12 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/24 18:20:54 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/25 13:01:48 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_flags
 	int		b_zero;
 	int		width_val;
 	int		prec_val;
+	int		b_uns;
 	char	specifier;
 }	t_flags;
 
@@ -63,5 +64,8 @@ int		printf_putstr(char *s, int limit, int null_cmp);
 void	pad_output(char c, int n);
 int		init_len(char *s, t_flags *flags);
 int		max(int n1, int n2);
+int		print_d_left(t_flags *flags, char *numstr);
+int		print_d_right(t_flags *flags, char *numstr);
+int		print_u(t_flags *flags, va_list ap);
 
 #endif

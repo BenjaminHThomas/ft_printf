@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:34:05 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/24 11:55:06 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/25 12:45:44 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ int	ft_printvarg(char **fmt, t_flags *flags, va_list ap)
 		len += print_p(flags, ap);
 	else if (**fmt == 'd' || **fmt == 'i')
 		len += print_digit(flags, ap);
-	/*else if (*fmt == 'u')
-		len += print_u(&flags, ap);
+	else if (**fmt == 'u')
+		len += print_u(flags, ap);
+	/*
 	else if (*fmt == 'x' or *fmt == 'X')
 		len += print_x(*fmt, &flags, ap);
 	*/

@@ -6,66 +6,66 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 12:08:38 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/25 12:00:40 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/25 13:06:47 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	out_d_prefix(t_flags *flags, char *numstr, int *bool_prefix)
+static int	out_d_prefix(t_flags *flags, char *numstr)
 {
-	if (flags->b_plus && *numstr != '-')
+	if (flags->b_plus && *numstr != '-' && !flags->b_uns)
 		ft_putchar_fd('+', 1);
 	else if (flags->b_space && *numstr != '-')
 		ft_putchar_fd(32, 1);
 	else
-		return ;
-	*bool_prefix = 1;
+		return (0);
+	return (1);
 }
 
-static int	print_d_left(t_flags *flags, char *numstr)
+int	print_d_left(t_flags *flags, char *numstr)
 {
 	int	len;
-	int	b_prefix;
+	int	b_pref;
 	int	width;
 	int	prec;
 
-	b_prefix = 0;
 	width = flags->width_val;
 	prec = flags->prec_val;
 	len = ft_strlen(numstr);
-	out_d_prefix(flags, numstr, &b_prefix);
+	b_pref = out_d_prefix(flags, numstr);
 	if (flags->prec_val > len)
 		pad_output('0', prec - len);
 	printf_putstr(numstr, -1, 1);
 	if (width > max(len, prec))
 	{
-		pad_output(get_padder(flags), width - max(len, prec) - b_prefix);
+		pad_output(32, width - max(len, prec) - b_pref);
 		return (width);
 	}
-	return (max(prec, len) + b_prefix);
+	return (max(prec, len) + b_pref);
 }
 
-static int	print_d_right(t_flags *flags, char *numstr)
+int	print_d_right(t_flags *flags, char *numstr)
 {
 	int	len;
-	int	b_prefix;
+	int	b_pref;
 	int	width;
 	int	prec;
 
 	len = ft_strlen(numstr);
 	width = flags->width_val;
 	prec = flags->prec_val;
-	b_prefix = ((flags->b_plus || flags->b_space) && *numstr != '-');
+	b_pref = (((flags->b_plus && flags->b_uns) 
+		|| flags->b_space) && *numstr != '-');
 	if (width > max(prec, len))
-		pad_output(get_padder(flags), width - max(prec, len) - b_prefix);
-	out_d_prefix(flags, numstr, &b_prefix);
+		pad_output(32, width - max(prec, len) - b_pref);
+	out_d_prefix(flags, numstr);
 	if (prec > len)
 		pad_output('0', prec - len);
 	printf_putstr(numstr, -1, 1);
 	if (width > prec)
 		return (max(width, len));
-	return (max(prec, len) + b_prefix);
+	return (max(prec, len) + b_pref);
 }
 
 int	print_digit(t_flags *flags, va_list ap)
@@ -74,7 +74,6 @@ int	print_digit(t_flags *flags, va_list ap)
 	int		i;
 	int		len;
 
-	len = 0;
 	i = va_arg(ap, int);
 	numstr = ft_itoa(i);
 	if (flags->b_minus)
