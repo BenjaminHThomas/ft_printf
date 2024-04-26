@@ -6,13 +6,13 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 14:18:25 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/26 15:49:17 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/26 16:39:44 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	get_xlen(t_flags *flags, unsigned n)
+static int	get_xlen(t_flags *flags, unsigned int n)
 {
 	if (flags->prec_val > num_digits(n, 16))
 		return (flags->prec_val);
@@ -20,7 +20,7 @@ static int	get_xlen(t_flags *flags, unsigned n)
 		return (num_digits(n, 16));
 }
 
-static void	create_xstr(char **xstr, unsigned n, char *base, t_flags *flags)
+static void	create_xstr(char **xstr, unsigned int n, char *base, t_flags *flags)
 {
 	int	strlen;
 	int	hash;
@@ -45,7 +45,7 @@ static void	create_xstr(char **xstr, unsigned n, char *base, t_flags *flags)
 	}
 }
 
-static char	*x_string(unsigned n, char *base, t_flags *flags)
+static char	*x_string(unsigned int n, char *base, t_flags *flags)
 {
 	char	*xstr;
 	int		numlen;

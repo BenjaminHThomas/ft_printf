@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 18:43:33 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/26 12:02:49 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/26 16:40:15 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	print_p_left(t_flags *flags, char *pstr)
 	int	len;
 
 	len = printf_putstr(pstr, -1, ft_memcmp(pstr, "(nil)", 5));
-	if (flags->width_val > len) 
+	if (flags->width_val > len)
 	{
 		pad_output(32, flags->width_val - len);
 		len = flags->width_val;
