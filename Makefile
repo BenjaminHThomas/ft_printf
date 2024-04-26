@@ -6,7 +6,7 @@
 #    By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/14 14:29:18 by bthomas           #+#    #+#              #
-#    Updated: 2024/04/25 12:31:07 by bthomas          ###   ########.fr        #
+#    Updated: 2024/04/25 15:09:24 by bthomas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ CFILES			= ft_printf.c \
 				  print_p.c \
 				  print_chars.c \
 				  print_u.c \
+				  print_x.c \
 				  print_di.c
 
 OBJ_DIR			= objs

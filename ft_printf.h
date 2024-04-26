@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 18:20:12 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/25 13:01:48 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/26 11:57:11 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@
 # define INTMAX 2147483647
 # define INTMIN -2147483648
 # define SPECS "cspdiuxX" /* ft_printf specifiers */
-# define FLAG_CHARS ".-+ #0"
+# define FLAG_CHARS "-+ #0"
 # define HEX_BASE "0123456789abcdef"
-# define DEC_BASE "0123456789"
-# define OCT_BASE "01234567"
+# define HEX_UP "0123456789ABCDEF"
 
 /* **** Structs ****/
 
@@ -41,13 +40,11 @@ typedef struct s_flags
 	int		b_zero;
 	int		width_val;
 	int		prec_val;
-	int		b_uns;
 	char	specifier;
 }	t_flags;
 
 /* **** prototypes **** */
 int		in(char const *s, char c);
-void	putnbr_base(long n, char *strbase, int *len);
 int		ft_printf(const char *fmt, ...);
 int		printf_atoi(char **str);
 int		ft_printvarg(char **fmt, t_flags *flags, va_list ap);
@@ -67,5 +64,10 @@ int		max(int n1, int n2);
 int		print_d_left(t_flags *flags, char *numstr);
 int		print_d_right(t_flags *flags, char *numstr);
 int		print_u(t_flags *flags, va_list ap);
+int		print_p_left(t_flags *flags, char *pstr);
+int		print_p_right(t_flags *flags, char *pstr);
+int		num_digits(unsigned long int n, int base);
+int		print_x(t_flags *flags, va_list ap);
+int		min(int n1, int n2);
 
 #endif

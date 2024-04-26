@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:05:55 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/25 12:44:40 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/26 11:52:20 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,15 @@ int	max(int n1, int n2)
 	if (n1 > n2)
 		return (n1);
 	return (n2);
+}
+
+int	min(int n1, int n2)
+{
+	if (!n1 && !n2)
+		return (0);
+	if (n1 > n2)
+		return (n2);
+	return (n1);
 }
 
 int	printf_putstr(char *s, int limit, int null_cmp)

@@ -6,33 +6,18 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 12:27:42 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/25 13:04:40 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/25 15:00:59 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-static int	num_digits(unsigned int n)
-{
-	int	num;
-
-	if (n == 0)
-		return (1);
-	num = 0;
-	while (n > 0)
-	{
-		num++;
-		n /= 10;
-	}
-	return (num);
-}
 
 static char	*ft_uitoa(unsigned int n)
 {
 	char			*str;
 	int				num_len;
 
-	num_len = num_digits(n);
+	num_len = num_digits(n, 10);
 	str = ft_calloc(num_len + 1, sizeof(char));
 	if (!str)
 		return (NULL);
@@ -51,7 +36,6 @@ int	print_u(t_flags *flags, va_list ap)
 	char			*numstr;
 	unsigned int	i;
 
-	flags->b_uns = 1;
 	i = va_arg(ap, unsigned int);
 	numstr = ft_uitoa(i);
 	if (flags->b_minus)
