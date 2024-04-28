@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 14:47:46 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/25 15:53:02 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/28 13:35:12 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	get_padder(t_flags *flags)
 {
-	if (flags->b_zero && flags->prec_val == -1)
+	if (flags->b_zero)
 		return ('0');
 	else
 		return (32);

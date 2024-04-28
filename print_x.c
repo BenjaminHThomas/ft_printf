@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 14:18:25 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/26 16:39:44 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/28 13:30:29 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	create_xstr(char **xstr, unsigned int n, char *base, t_flags *flags)
 	int	strlen;
 	int	hash;
 
-	hash = 2 * flags->b_hash;
+	hash = (2 * flags->b_hash) * (n != 0);
 	strlen = get_xlen(flags, n) + hash - 1;
 	if (hash)
 	{

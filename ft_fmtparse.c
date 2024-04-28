@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 09:40:24 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/26 11:57:40 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/26 16:48:37 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ static void	process_flags(char **fmt, t_flags *flags, va_list ap)
 int	ft_fmtparse(char *fmt, va_list ap)
 {
 	int		len;
+	int		print_return;
 	t_flags	flags;
 
 	len = 0;
@@ -84,7 +85,9 @@ int	ft_fmtparse(char *fmt, va_list ap)
 		if (*fmt == '%' && *(fmt++))
 		{
 			process_flags(&fmt, &flags, ap);
-			len += ft_printvarg(&fmt, &flags, ap);
+			print_return = ft_printvarg(&fmt, &flags, ap);
+			if (print_return != -1)
+				len += (print_return);
 		}
 		else
 		{
@@ -93,5 +96,7 @@ int	ft_fmtparse(char *fmt, va_list ap)
 		}
 		fmt++;
 	}
+	if (print_return == -1)
+		return (-1);
 	return (len);
 }

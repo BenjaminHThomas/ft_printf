@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:34:05 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/25 16:40:06 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/26 16:37:51 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,7 @@ int	ft_printvarg(char **fmt, t_flags *flags, va_list ap)
 		len += print_x(flags, ap);
 	else if (**fmt == '%')
 		len = write(1, "%", 1);
+	else
+		return (-1);
 	return (len);
 }
