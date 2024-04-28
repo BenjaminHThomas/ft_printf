@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 14:47:46 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/28 18:16:25 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/28 18:22:01 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ int	valid_fmt(char **fmt)
 	{
 		if ((*fmt)[i] == '%')
 		{
-			if ((*fmt)[i + 1] == '%')
+			while (in(FLAG_CHARS, (*fmt)[i + 1]))
 				i++;
-			else if (in(FLAG_CHARS, (*fmt)[i + 1]))
-				i++;
-			else if (ft_isdigit((*fmt)[i + 1])
+			while (ft_isdigit((*fmt)[i + 1])
 				|| (*fmt)[i + 1] == '*'
 				|| (*fmt)[i + 1] == '.')
+				i++;
+			if ((*fmt)[i + 1] == '%')
 				i++;
 			else if (!in(SPECS, (*fmt)[i + 1]))
 				return (0);
