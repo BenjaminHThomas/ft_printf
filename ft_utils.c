@@ -6,11 +6,36 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 14:47:46 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/28 13:35:12 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/28 18:16:25 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+int	valid_fmt(char **fmt)
+{
+	int		i;
+
+	i = 0;
+	while ((*fmt)[i])
+	{
+		if ((*fmt)[i] == '%')
+		{
+			if ((*fmt)[i + 1] == '%')
+				i++;
+			else if (in(FLAG_CHARS, (*fmt)[i + 1]))
+				i++;
+			else if (ft_isdigit((*fmt)[i + 1])
+				|| (*fmt)[i + 1] == '*'
+				|| (*fmt)[i + 1] == '.')
+				i++;
+			else if (!in(SPECS, (*fmt)[i + 1]))
+				return (0);
+		}
+		i++;
+	}
+	return (1);
+}
 
 char	get_padder(t_flags *flags)
 {
@@ -41,18 +66,6 @@ int	printf_atoi(char **str)
 	while (ft_isdigit(**str))
 		++(*str);
 	return (num);
-}
-
-int	is_printable(char c)
-{
-	unsigned char	c2;
-
-	c2 = c;
-	if (c2 >= 32 && c2 <= 126)
-		return (1);
-	if (c2 >= 9 && c2 <= 13)
-		return (1);
-	return (0);
 }
 
 int	num_digits(unsigned long int n, int base)

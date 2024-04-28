@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 10:22:30 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/16 16:41:22 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/28 18:08:29 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ int	ft_printf(const char *format, ...)
 	if (!fmt)
 		return (0);
 	va_start(ap, format);
-	len += ft_fmtparse(fmt, ap);
+	if (valid_fmt(&fmt))
+		len += ft_fmtparse(fmt, ap);
+	else
+		len = -1;
 	va_end(ap);
 	free(fmt);
 	return (len);

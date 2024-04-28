@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 18:20:12 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/26 11:57:11 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/28 18:10:06 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 # define INTMAX 2147483647
 # define INTMIN -2147483648
-# define SPECS "cspdiuxX" /* ft_printf specifiers */
+# define SPECS "cspdiuxX%" /* ft_printf specifiers */
 # define FLAG_CHARS "-+ #0"
 # define HEX_BASE "0123456789abcdef"
 # define HEX_UP "0123456789ABCDEF"
@@ -69,5 +69,7 @@ int		print_p_right(t_flags *flags, char *pstr);
 int		num_digits(unsigned long int n, int base);
 int		print_x(t_flags *flags, va_list ap);
 int		min(int n1, int n2);
+int		print_perc(char **fmt);
+int		valid_fmt(char **fmt);
 
 #endif

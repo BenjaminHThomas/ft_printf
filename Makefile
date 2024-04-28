@@ -6,7 +6,7 @@
 #    By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/14 14:29:18 by bthomas           #+#    #+#              #
-#    Updated: 2024/04/25 15:09:24 by bthomas          ###   ########.fr        #
+#    Updated: 2024/04/28 14:06:05 by bthomas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ CFILES			= ft_printf.c \
 				  print_chars.c \
 				  print_u.c \
 				  print_x.c \
-				  print_di.c
+				  print_di.c \
+				  print_perc.c
 
 OBJ_DIR			= objs
 OFILES			= $(addprefix $(OBJ_DIR)/,$(CFILES:.c=.o))
