@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 14:18:25 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/28 13:30:29 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/28 21:34:10 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 static int	get_xlen(t_flags *flags, unsigned int n)
 {
-	if (flags->prec_val > num_digits(n, 16))
-		return (flags->prec_val);
-	else
-		return (num_digits(n, 16));
+	int	numlen;
+	int	maxflag;
+
+	numlen = num_digits(n, 16);
+	maxflag = max(flags->prec_val, flags->width_val);
+	return (max(maxflag, numlen));
 }
 
 static void	create_xstr(char **xstr, unsigned int n, char *base, t_flags *flags)
@@ -26,7 +28,7 @@ static void	create_xstr(char **xstr, unsigned int n, char *base, t_flags *flags)
 	int	hash;
 
 	hash = (2 * flags->b_hash) * (n != 0);
-	strlen = get_xlen(flags, n) + hash - 1;
+	strlen = max(flags->prec_val, num_digits(n, 16)) + hash - 1;
 	if (hash)
 	{
 		(*xstr)[0] = '0';
@@ -49,17 +51,13 @@ static char	*x_string(unsigned int n, char *base, t_flags *flags)
 {
 	char	*xstr;
 	int		numlen;
-	int		prec;
 
-	numlen = num_digits(n, 16) + (2 * flags->b_hash);
-	if (flags->prec_val == -1)
-		prec = numlen;
-	else
-		prec = flags->prec_val + (2 * flags->b_hash);
-	xstr = (char *)malloc(prec * sizeof(char) + 1);
+	numlen = get_xlen(flags, n);
+	numlen += (2 * flags->b_hash);
+	xstr = (char *)malloc(numlen * sizeof(char) + 1);
 	if (!xstr)
 		return (NULL);
-	ft_bzero(xstr, prec + 1);
+	ft_bzero(xstr, numlen + 1);
 	create_xstr(&xstr, n, base, flags);
 	return (xstr);
 }
