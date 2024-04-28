@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 12:08:38 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/28 13:39:14 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/28 21:05:22 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ int	print_d_right(t_flags *flags, char *numstr)
 	prec = flags->prec_val;
 	b_pref = ((((flags->b_plus && flags->specifier != 'u')
 					|| flags->b_space) && *numstr != '-') || *numstr == '-');
-	out_d_prefix(flags, &numstr);
 	if (width > max(prec, len))
 		pad_output(get_padder(flags), width - max(prec, len));
+	out_d_prefix(flags, &numstr);
 	if (prec > len)
 		pad_output('0', prec - len);
 	b_pref = printf_putstr(numstr, -1, 1);
