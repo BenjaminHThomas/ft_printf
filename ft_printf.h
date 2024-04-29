@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 18:20:12 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/28 18:10:06 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/29 12:52:36 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,8 @@
 
 /* **** Structs ****/
 
-/* s_flags stores the info of flags present in the format string 
- * %[flags][width][.precision][length]specifier
- * specifier = cspdiuxX%
- * (length is not implemented here) */
+/* %[flags][width][.precision][length]specifier
+ * specifier = cspdiuxX% */
 typedef struct s_flags
 {
 	int		b_minus;
@@ -40,6 +38,7 @@ typedef struct s_flags
 	int		b_zero;
 	int		width_val;
 	int		prec_val;
+	int		b_null;
 	char	specifier;
 }	t_flags;
 
@@ -57,7 +56,7 @@ int		print_digit(t_flags *flags, va_list ap);
 void	print_flags(t_flags *flags);
 void	pad_output(char c, int n);
 char	get_padder(t_flags *flags);
-int		printf_putstr(char *s, int limit, int null_cmp);
+int		printf_putstr(char *s, int limit, int not_null);
 void	pad_output(char c, int n);
 int		init_len(char *s, t_flags *flags);
 int		max(int n1, int n2);

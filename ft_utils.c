@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 14:47:46 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/28 21:40:09 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/29 11:15:09 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	valid_fmt(char **fmt)
 
 char	get_padder(t_flags *flags)
 {
-	if (flags->b_zero)
+	if (flags->b_zero && !flags->b_null)
 		return ('0');
 	else
 		return (32);

@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:05:55 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/26 11:52:20 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/29 12:52:25 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ int	min(int n1, int n2)
 	return (n1);
 }
 
-int	printf_putstr(char *s, int limit, int null_cmp)
+int	printf_putstr(char *s, int limit, int not_null)
 {
 	int	len;
 
 	len = 0;
-	if (limit == -1 || null_cmp == 0)
+	if (limit == -1 || !not_null)
 		limit = ft_strlen(s);
 	while (*s && limit)
 	{
