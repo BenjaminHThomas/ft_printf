@@ -6,11 +6,22 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 12:08:38 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/07 12:38:15 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/07 13:11:35 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+static int	get_prefix(t_flags *flags, char **numstr)
+{
+	if (**numstr == '-')
+		return ('-');
+	if (flags->b_plus && flags->specifier != 'u')
+		return ('+');
+	if (flags->b_space && flags->specifier != 'u')
+		return (32);
+	return (0);
+}
 
 static int	out_d_prefix(t_flags *flags, char **numstr)
 {
@@ -55,10 +66,12 @@ int	print_d_left(t_flags *flags, char *numstr)
 int	print_d_right(t_flags *flags, char *numstr)
 {
 	int	len;
-	int	b_prefix;
+	int	strlen;
 	int	width;
 	int	prec;
+	int	extra_char;
 
+	extra_char = in("+ ", get_prefix(flags, &numstr));
 	len = ft_strlen(numstr);
 	width = flags->width_val;
 	prec = flags->prec_val;
@@ -70,10 +83,10 @@ int	print_d_right(t_flags *flags, char *numstr)
 		out_d_prefix(flags, &numstr);
 	if (prec > len)
 		pad_output('0', prec - len);
-	b_prefix = printf_putstr(numstr, -1, 1);
+	strlen = printf_putstr(numstr, -1, 1);
 	if (width > prec)
-		return (max(width, len));
-	return (max(prec, len) + b_prefix);
+		return (max(width, len) + extra_char);
+	return (max(prec, len) + strlen + extra_char);
 }
 
 int	print_digit(t_flags *flags, va_list ap)
