@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 12:08:38 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/28 21:18:32 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/07 12:38:15 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,54 +14,54 @@
 
 static int	out_d_prefix(t_flags *flags, char **numstr)
 {
-	if (flags->b_plus && **numstr != '-' && flags->specifier != 'u')
-		ft_putchar_fd('+', 1);
-	else if (flags->b_space && **numstr != '-')
-		ft_putchar_fd(32, 1);
-	else if (**numstr == '-')
+	char	spec;
+
+	spec = flags->specifier;
+	if (**numstr == '-')
 	{
-		ft_putchar_fd('-', 1);
 		(*numstr)++;
+		return (write(1, "-", 1));
 	}
+	else if (flags->b_plus && spec != 'u')
+		return (write(1, "+", 1));
+	else if (flags->b_space && spec != 'u')
+		return (write(1, " ", 1));
 	else
 		return (0);
-	return (1);
 }
 
 int	print_d_left(t_flags *flags, char *numstr)
 {
 	int	len;
-	int	b_pref;
+	int	b_prefix;
 	int	width;
 	int	prec;
 
 	width = flags->width_val;
 	prec = flags->prec_val;
 	len = ft_strlen(numstr);
-	b_pref = out_d_prefix(flags, &numstr);
-	if (flags->prec_val > len)
-		pad_output('0', prec - len + b_pref);
+	b_prefix = out_d_prefix(flags, &numstr);
+	if (prec > len)
+		pad_output('0', prec - len + b_prefix);
 	printf_putstr(numstr, -1, 1);
 	if (width > max(len, prec))
 	{
 		pad_output(get_padder(flags), width - max(len, prec));
-		return (width);
+		return (width + b_prefix);
 	}
-	return (max(prec, len) + b_pref);
+	return (max(prec, len) + b_prefix);
 }
 
 int	print_d_right(t_flags *flags, char *numstr)
 {
 	int	len;
-	int	b_pref;
+	int	b_prefix;
 	int	width;
 	int	prec;
 
 	len = ft_strlen(numstr);
 	width = flags->width_val;
 	prec = flags->prec_val;
-	b_pref = ((((flags->b_plus && flags->specifier != 'u')
-					|| flags->b_space) && *numstr != '-') || *numstr == '-');
 	if (get_padder(flags) == '0')
 		out_d_prefix(flags, &numstr);
 	if (width > max(prec, len))
@@ -70,10 +70,10 @@ int	print_d_right(t_flags *flags, char *numstr)
 		out_d_prefix(flags, &numstr);
 	if (prec > len)
 		pad_output('0', prec - len);
-	b_pref = printf_putstr(numstr, -1, 1);
+	b_prefix = printf_putstr(numstr, -1, 1);
 	if (width > prec)
 		return (max(width, len));
-	return (max(prec, len) + b_pref);
+	return (max(prec, len) + b_prefix);
 }
 
 int	print_digit(t_flags *flags, va_list ap)
@@ -88,7 +88,7 @@ int	print_digit(t_flags *flags, va_list ap)
 	{
 		len = print_d_left(flags, numstr);
 		free(numstr);
-		return (len);
+		return (len - 1 * (i < 0));
 	}
 	len = print_d_right(flags, numstr);
 	free(numstr);
