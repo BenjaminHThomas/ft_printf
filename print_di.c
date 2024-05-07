@@ -6,13 +6,13 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 12:08:38 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/07 13:11:35 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/07 13:34:55 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	get_prefix(t_flags *flags, char **numstr)
+int	get_prefix(t_flags *flags, char **numstr)
 {
 	if (**numstr == '-')
 		return ('-');

@@ -6,22 +6,25 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 18:43:33 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/29 12:50:18 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/07 13:43:44 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char	*create_pstr(char *pstr, long unsigned n, int len)
+static char	*create_pstr(char *pstr, long unsigned n, int len, t_flags *flags)
 {
-	int	i;
-	int	pad_size;
+	int		numlen;
+	int		pad_size;
+	char	prefix;
 
-	i = num_digits(n, 16);
-	pad_size = len - i;
-	i += pad_size + 1;
-	pstr[0] = '0';
-	pstr[1] = 'x';
+	prefix = get_prefix(flags, &pstr);
+	pstr[0] = prefix;
+	numlen = num_digits(n, 16);
+	pad_size = len - numlen - (prefix != 0);
+	pstr[0 + (prefix != 0)] = '0';
+	pstr[1 + (prefix != 0)] = 'x';
+	numlen += pad_size + (prefix != 0) + 1;
 	while (pad_size > 0)
 	{
 		pstr[1 + pad_size] = '0';
@@ -29,11 +32,11 @@ static char	*create_pstr(char *pstr, long unsigned n, int len)
 	}
 	while (n >= 16)
 	{
-		pstr[i] = HEX_BASE[n % 16];
+		pstr[numlen] = HEX_BASE[n % 16];
 		n /= 16;
-		i--;
+		numlen--;
 	}
-	pstr[i] = HEX_BASE[n % 16];
+	pstr[numlen] = HEX_BASE[n % 16];
 	return (pstr);
 }
 
@@ -54,7 +57,7 @@ static char	*p_string(long unsigned n, t_flags *flags, int len)
 	if (!pstr)
 		return (NULL);
 	ft_bzero(pstr, len + 3);
-	pstr = create_pstr(pstr, n, len);
+	pstr = create_pstr(pstr, n, len, flags);
 	return (pstr);
 }
 
@@ -74,7 +77,7 @@ int	print_p_left(t_flags *flags, char *pstr)
 
 int	print_p_right(t_flags *flags, char *pstr)
 {
-	int		len;
+	int	len;
 
 	len = 0;
 	if (flags->width_val > ft_strlen(pstr))
@@ -97,7 +100,7 @@ int	print_p(t_flags *flags, va_list ap)
 	int					numlen;
 
 	address = (long unsigned int)va_arg(ap, void *);
-	numlen = num_digits(address, 16);
+	numlen = num_digits(address, 16) + (flags->b_space || flags->b_plus);
 	len = max(flags->width_val * flags->b_zero, flags->prec_val);
 	len = numlen + max(len - 2 - numlen, 0);
 	pstr = p_string(address, flags, len);

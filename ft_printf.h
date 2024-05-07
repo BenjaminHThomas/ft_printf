@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 18:20:12 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/29 12:52:36 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/07 13:35:11 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,6 @@ int		print_x(t_flags *flags, va_list ap);
 int		min(int n1, int n2);
 int		print_perc(char **fmt);
 int		valid_fmt(char **fmt);
+int		get_prefix(t_flags *flags, char **numstr);
 
 #endif
