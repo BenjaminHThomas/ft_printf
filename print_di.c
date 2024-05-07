@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 12:08:38 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/07 13:34:55 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/07 17:36:49 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	print_d_left(t_flags *flags, char *numstr)
 	b_prefix = out_d_prefix(flags, &numstr);
 	if (prec > len)
 		pad_output('0', prec - len + b_prefix);
-	printf_putstr(numstr, -1, 1);
+	printf_putstr(numstr, prec, 1);
 	if (width > max(len, prec))
 	{
 		pad_output(get_padder(flags), width - max(len, prec));
@@ -82,21 +82,25 @@ int	print_d_right(t_flags *flags, char *numstr)
 	if (get_padder(flags) != '0')
 		out_d_prefix(flags, &numstr);
 	if (prec > len)
-		pad_output('0', prec - len);
-	strlen = printf_putstr(numstr, -1, 1);
+		pad_output('0', prec - len + extra_char);
+	strlen = printf_putstr(numstr, prec, 1);
 	if (width > prec)
-		return (max(width, len) + extra_char);
-	return (max(prec, len) + strlen + extra_char);
+		return (max(max(width, len), strlen) + extra_char);
+	return (max(max(prec, len), strlen) + extra_char);
 }
 
 int	print_digit(t_flags *flags, va_list ap)
 {
+	int		numlen;
 	char	*numstr;
 	int		i;
 	int		len;
 
 	i = va_arg(ap, int);
 	numstr = ft_itoa(i);
+	numlen = ft_strlen(numstr);
+	if (i != 0 && flags->prec_val < numlen)
+		flags->prec_val = numlen;
 	if (flags->b_minus)
 	{
 		len = print_d_left(flags, numstr);

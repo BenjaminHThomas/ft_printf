@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 12:27:42 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/25 15:00:59 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/07 16:37:07 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,16 @@ static char	*ft_uitoa(unsigned int n)
 
 int	print_u(t_flags *flags, va_list ap)
 {
+	int				strlen;
 	int				len;
 	char			*numstr;
 	unsigned int	i;
 
 	i = va_arg(ap, unsigned int);
 	numstr = ft_uitoa(i);
+	strlen = ft_strlen(numstr);
+	if (flags->prec_val < strlen)
+		flags->prec_val = strlen;
 	if (flags->b_minus)
 		len = print_d_left(flags, numstr);
 	else

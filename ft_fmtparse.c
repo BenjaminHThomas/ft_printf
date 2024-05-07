@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 09:40:24 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/29 11:13:48 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/04/29 20:08:53 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,8 @@
 
 static void	reset_flags(t_flags *flags)
 {
-	flags->b_minus = 0;
-	flags->b_plus = 0;
-	flags->b_space = 0;
-	flags->b_hash = 0;
-	flags->b_zero = 0;
-	flags->width_val = 0;
+	ft_memset(flags, 0, sizeof(t_flags));
 	flags->prec_val = -1;
-	flags->b_null = 0;
-	flags->specifier = 0;
 }
 
 static void	parse_prec(char **fmt, t_flags *flags, va_list ap)

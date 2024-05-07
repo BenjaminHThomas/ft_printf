@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 18:20:12 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/07 13:35:11 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/07 17:30:37 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # define FLAG_CHARS "-+ #0"
 # define HEX_BASE "0123456789abcdef"
 # define HEX_UP "0123456789ABCDEF"
+/* REG is the pattern for printable invalid printf strings */
+# define REG "%[-+# 0]*([0-9]*|\*)?(\.[0-9]*|\.\*)"
 
 /* **** Structs ****/
 
