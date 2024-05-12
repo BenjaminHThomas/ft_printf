@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 09:39:37 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/12 14:31:37 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/12 19:26:24 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,14 @@ int	ft_prints(t_data *data)
 	if (!data->strnum)
 	{
 		if (data->flags.prec < 6 && data->flags.prec != -1)
-			return (0);
+			data->flags.prec = 0;
 		b_null = 1;
 		data->strnum = (char *)ft_calloc(7, 1);
 		if (!data->strnum)
 			return (1);
 		ft_strlcpy(data->strnum, "(null)", 7);
 	}
-	data->numlen = ft_strlen(data->strnum);
+	data->numlen = ft_strlen(data->strnum) * (data->flags.prec != 0);
 	ret = cs_out(data);
 	if (b_null)
 		free(data->strnum);
