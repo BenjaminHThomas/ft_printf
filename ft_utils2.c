@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 12:35:44 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/11 20:01:40 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/12 19:57:55 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	pad_out(t_data *data, char *out, int n, int is_prec)
 		return ;
 	if (is_prec && in("dipuxX", data->flags.specifier))
 		padchar = '0';
+	else if (!is_prec && in("diu", data->flags.specifier))
+		padchar = 32;
 	else
 		padchar = get_padder(data);
 	padstr = (char *)ft_calloc(n + 1, 1);
