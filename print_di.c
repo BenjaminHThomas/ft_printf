@@ -5,109 +5,129 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 12:08:38 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/07 17:36:49 by bthomas          ###   ########.fr       */
+/*   Created: 2024/05/09 10:04:41 by bthomas           #+#    #+#             */
+/*   Updated: 2024/05/12 15:18:42 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	get_prefix(t_flags *flags, char **numstr)
+int	out_d_prefix(t_data *data, char *out)
 {
-	if (**numstr == '-')
-		return ('-');
-	if (flags->b_plus && flags->specifier != 'u')
-		return ('+');
-	if (flags->b_space && flags->specifier != 'u')
-		return (32);
+	if (!data || !out)
+		return (0);
+	if (*data->strnum == '-')
+	{
+		append(out, "-", -1);
+		return (1);
+	}
+	else if (data->flags.b_plus)
+	{
+		append(out, "+", -1);
+		return (1);
+	}
+	else if (data->flags.b_space)
+	{
+		append(out, " ", -1);
+		return (1);
+	}
 	return (0);
 }
 
-static int	out_d_prefix(t_flags *flags, char **numstr)
+static int	get_len_di(t_data *data)
 {
-	char	spec;
-
-	spec = flags->specifier;
-	if (**numstr == '-')
-	{
-		(*numstr)++;
-		return (write(1, "-", 1));
-	}
-	else if (flags->b_plus && spec != 'u')
-		return (write(1, "+", 1));
-	else if (flags->b_space && spec != 'u')
-		return (write(1, " ", 1));
-	else
-		return (0);
-}
-
-int	print_d_left(t_flags *flags, char *numstr)
-{
-	int	len;
-	int	b_prefix;
-	int	width;
-	int	prec;
-
-	width = flags->width_val;
-	prec = flags->prec_val;
-	len = ft_strlen(numstr);
-	b_prefix = out_d_prefix(flags, &numstr);
-	if (prec > len)
-		pad_output('0', prec - len + b_prefix);
-	printf_putstr(numstr, prec, 1);
-	if (width > max(len, prec))
-	{
-		pad_output(get_padder(flags), width - max(len, prec));
-		return (width + b_prefix);
-	}
-	return (max(prec, len) + b_prefix);
-}
-
-int	print_d_right(t_flags *flags, char *numstr)
-{
-	int	len;
-	int	strlen;
-	int	width;
-	int	prec;
-	int	extra_char;
-
-	extra_char = in("+ ", get_prefix(flags, &numstr));
-	len = ft_strlen(numstr);
-	width = flags->width_val;
-	prec = flags->prec_val;
-	if (get_padder(flags) == '0')
-		out_d_prefix(flags, &numstr);
-	if (width > max(prec, len))
-		pad_output(get_padder(flags), width - max(prec, len));
-	if (get_padder(flags) != '0')
-		out_d_prefix(flags, &numstr);
-	if (prec > len)
-		pad_output('0', prec - len + extra_char);
-	strlen = printf_putstr(numstr, prec, 1);
-	if (width > prec)
-		return (max(max(width, len), strlen) + extra_char);
-	return (max(max(prec, len), strlen) + extra_char);
-}
-
-int	print_digit(t_flags *flags, va_list ap)
-{
-	int		numlen;
-	char	*numstr;
-	int		i;
 	int		len;
+	int		width;
+	int		prec;
+	char	*strnum;
+	int		extra_char;
 
-	i = va_arg(ap, int);
-	numstr = ft_itoa(i);
-	numlen = ft_strlen(numstr);
-	if (i != 0 && flags->prec_val < numlen)
-		flags->prec_val = numlen;
-	if (flags->b_minus)
-	{
-		len = print_d_left(flags, numstr);
-		free(numstr);
-		return (len - 1 * (i < 0));
-	}
-	len = print_d_right(flags, numstr);
-	free(numstr);
-	return (len);
+	strnum = data->strnum;
+	len = data->numlen;
+	width = data->flags.width;
+	prec = data->flags.prec;
+	if (*strnum == '-' || data->flags.b_space || data->flags.b_plus)
+		extra_char = 1;
+	else
+		extra_char = 0;
+	if (*strnum == '0' && prec == 0 && width == 0)
+		return (0);
+	if (width > prec)
+		return (max(width, len) + extra_char);
+	else
+		return (max(prec, len) + extra_char);
+}
+
+static int	di_left(t_data *data)
+{
+	char	*out;
+	int		res;
+	int		width_pad;
+	int		prec_pad;
+	int		extra_char;
+
+	out = (char *)ft_calloc(data->varg_len + 1, 1);
+	if (!out)
+		return (1);
+	extra_char = out_d_prefix(data, out);
+	width_pad = data->flags.width - max(data->numlen, data->flags.prec)
+		- (extra_char && (*data->strnum != '-'));
+	prec_pad = data->flags.prec - data->numlen
+		+ (*data->strnum == '-');
+	pad_out(data, out, prec_pad, 1);
+	append(out, data->strnum + (*data->strnum == '-'), -1);
+	pad_out(data, out, width_pad, 0);
+	res = to_buf(data, out);
+	free(out);
+	return (res);
+}
+
+static int	di_right(t_data *data)
+{
+	char	*out;
+	int		res;
+	int		width_pad;
+	int		prec_pad;
+	int		extra_char;
+
+	out = (char *)ft_calloc(data->varg_len + 1, 1);
+	if (!out)
+		return (1);
+	extra_char = ((data->flags.b_space || data->flags.b_plus)
+			&& !(*data->strnum == '-')) + (*data->strnum == '-');
+	width_pad = data->flags.width - max(data->numlen, data->flags.prec)
+		- (extra_char && (*data->strnum != '-'));
+	prec_pad = data->flags.prec - data->numlen
+		+ (*data->strnum == '-');
+	if (width_pad && data->flags.b_zero)
+		out_d_prefix(data, out);
+	pad_out(data, out, width_pad, 0);
+	if (!(width_pad && data->flags.b_zero))
+		out_d_prefix(data, out);
+	pad_out(data, out, prec_pad, 1);
+	append(out, data->strnum + (*data->strnum == '-'), -1);
+	res = to_buf(data, out);
+	free(out);
+	return (res);
+}
+
+int	ft_printdi(t_data *data)
+{
+	int		d;
+	int		res;
+
+	d = va_arg(data->ap, int);
+	if (!d && data->flags.prec == 0)
+		return (0);
+	data->strnum = ft_itoa(d);
+	data->numlen = ft_strlen(data->strnum);
+	data->varg_len = get_len_di(data);
+	if (data->varg_len && data->flags.b_minus)
+		res = di_left(data);
+	else if (data->varg_len)
+		res = di_right(data);
+	free(data->strnum);
+	data->varg_len = 0;
+	data->numlen = 0;
+	return (res);
 }

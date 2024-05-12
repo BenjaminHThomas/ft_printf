@@ -5,65 +5,74 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/24 08:05:55 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/29 12:52:25 by bthomas          ###   ########.fr       */
+/*   Created: 2024/05/09 12:35:44 by bthomas           #+#    #+#             */
+/*   Updated: 2024/05/11 20:01:40 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	max(int n1, int n2)
+void	pad_out(t_data *data, char *out, int n, int is_prec)
 {
-	if (!n1 && !n2)
-		return (0);
-	if (n1 > n2)
-		return (n1);
-	return (n2);
+	char	padchar;
+	char	*padstr;
+
+	if (!data || !out || n <= 0)
+		return ;
+	if (is_prec && in("dipuxX", data->flags.specifier))
+		padchar = '0';
+	else
+		padchar = get_padder(data);
+	padstr = (char *)ft_calloc(n + 1, 1);
+	if (!padstr)
+		return ;
+	while (n--)
+		padstr[n] = padchar;
+	append(out, padstr, -1);
+	free(padstr);
 }
 
-int	min(int n1, int n2)
+int	get_padder(t_data *data)
 {
-	if (!n1 && !n2)
-		return (0);
-	if (n1 > n2)
-		return (n2);
-	return (n1);
-}
+	char	spec;
 
-int	printf_putstr(char *s, int limit, int not_null)
-{
-	int	len;
-
-	len = 0;
-	if (limit == -1 || !not_null)
-		limit = ft_strlen(s);
-	while (*s && limit)
+	spec = data->flags.specifier;
+	if (in("dipuxX", spec))
 	{
-		ft_putchar_fd(*s, 1);
-		len++;
-		s++;
-		limit--;
+		if (data->flags.b_zero && !data->flags.b_minus)
+			return ('0');
 	}
-	return (len);
+	return (32);
 }
 
-void	pad_output(char c, int n)
+int	get_prefix(t_data *data)
 {
+	char	spec;
+
+	spec = data->flags.specifier;
+	if (!in("upxX", spec) && *data->strnum == '-')
+		return ('-');
+	if (spec != 'u' && data->flags.b_plus)
+		return ('+');
+	if (spec != 'u' && data->flags.b_space)
+		return (32);
+	else
+		return (0);
+}
+
+int	num_digits(unsigned long int n, int base)
+{
+	int	numlen;
+
+	if (base <= 0)
+		return (-1);
+	if (n == 0)
+		return (1);
+	numlen = 0;
 	while (n)
 	{
-		ft_putchar_fd(c, 1);
-		n--;
+		n /= base;
+		numlen++;
 	}
-}
-
-int	init_len(char *s, t_flags *flags)
-{
-	int	len;
-	int	prec;
-
-	prec = flags->prec_val;
-	len = ft_strlen(s);
-	if (prec == -1 || prec > len)
-		return (len);
-	return (prec);
+	return (numlen);
 }

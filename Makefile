@@ -6,19 +6,19 @@
 #    By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/14 14:29:18 by bthomas           #+#    #+#              #
-#    Updated: 2024/04/28 18:17:52 by bthomas          ###   ########.fr        #
+#    Updated: 2024/05/09 12:35:54 by bthomas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= libftprintf.a
 
 CFILES			= ft_printf.c \
-				  ft_fmtparse.c \
-				  ft_utils.c \
+				  buff_mgmt.c \
+				  ft_utils1.c \
 				  ft_utils2.c \
-				  ft_printvargs.c \
+				  parse_fmt.c \
+				  print_cs.c \
 				  print_p.c \
-				  print_chars.c \
 				  print_u.c \
 				  print_x.c \
 				  print_di.c

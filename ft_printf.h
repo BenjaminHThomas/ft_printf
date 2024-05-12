@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 18:20:12 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/07 17:30:37 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/11 19:58:31 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,15 @@
 # include <unistd.h> /* write */
 # include "libft/libft.h"
 
-# define INTMAX 2147483647
-# define INTMIN -2147483648
+# define INTMAX 2147483647 /* for testing */
+# define INTMIN -2147483648 /* for testing */
 # define SPECS "cspdiuxX%" /* ft_printf specifiers */
-# define FLAG_CHARS "-+ #0"
+# define FLAGS "-+ #0"
+# define ALL_VALID "-+ #0.*"
 # define HEX_BASE "0123456789abcdef"
 # define HEX_UP "0123456789ABCDEF"
-/* REG is the pattern for printable invalid printf strings */
-# define REG "%[-+# 0]*([0-9]*|\*)?(\.[0-9]*|\.\*)"
+# define BASE_10 "0123456789"
+# define BUFF_SIZE 4096
 
 /* **** Structs ****/
 
@@ -38,40 +39,48 @@ typedef struct s_flags
 	int		b_space;
 	int		b_hash;
 	int		b_zero;
-	int		width_val;
-	int		prec_val;
-	int		b_null;
+	int		width;
+	int		prec;
 	char	specifier;
 }	t_flags;
 
+typedef struct s_data
+{
+	const char	*fmt;
+	int			fmt_idx;
+	va_list		ap;
+	int			len_out;
+	char		*buff;
+	int			buf_idx;
+	char		*strnum;
+	int			numlen;
+	int			varg_len;
+	t_flags		flags;
+}	t_data;
+
 /* **** prototypes **** */
+int		ft_printf(const char *format, ...);
+void	reset_flags(t_data *data);
+int		parse_fmt(t_data *data);
+void	buf_fmt(t_data *data, int n);
+int		printf_atoi(t_data *data);
+int		ft_printx(t_data *data);
+int		ft_printc(t_data *data);
+int		ft_prints(t_data *data);
+int		ft_printp(t_data *data);
+int		ft_printu(t_data *data);
+int		ft_printdi(t_data *data);
 int		in(char const *s, char c);
-int		ft_printf(const char *fmt, ...);
-int		printf_atoi(char **str);
-int		ft_printvarg(char **fmt, t_flags *flags, va_list ap);
-int		is_printable(char c);
-int		ft_fmtparse(char *fmt, va_list ap);
-int		print_p(t_flags *flags, va_list ap);
-int		print_s(t_flags *flags, va_list ap);
-int		print_c(t_flags *flags, va_list ap);
-int		print_digit(t_flags *flags, va_list ap);
-void	print_flags(t_flags *flags);
-void	pad_output(char c, int n);
-char	get_padder(t_flags *flags);
-int		printf_putstr(char *s, int limit, int not_null);
-void	pad_output(char c, int n);
-int		init_len(char *s, t_flags *flags);
-int		max(int n1, int n2);
-int		print_d_left(t_flags *flags, char *numstr);
-int		print_d_right(t_flags *flags, char *numstr);
-int		print_u(t_flags *flags, va_list ap);
-int		print_p_left(t_flags *flags, char *pstr);
-int		print_p_right(t_flags *flags, char *pstr);
-int		num_digits(unsigned long int n, int base);
-int		print_x(t_flags *flags, va_list ap);
-int		min(int n1, int n2);
-int		print_perc(char **fmt);
-int		valid_fmt(char **fmt);
-int		get_prefix(t_flags *flags, char **numstr);
+int		buf_fmt_back(t_data *data);
+int		to_buf(t_data *data, char *s);
+int		max(int i1, int i2);
+int		append(char *body, char *att, int limit);
+int		get_padder(t_data *data);
+void	pad_out(t_data *data, char *out, int n, int is_prec);
+int		get_prefix(t_data *data);
+int		num_digits(long unsigned int n, int base);
+int		out_d_prefix(t_data *data, char *out);
+void	ft_atoi_base(t_data *data, long unsigned n, char *base);
+int		char_to_buf(t_data *data, char c);
 
 #endif

@@ -5,47 +5,74 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/25 12:27:42 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/07 16:37:07 by bthomas          ###   ########.fr       */
+/*   Created: 2024/05/09 09:43:38 by bthomas           #+#    #+#             */
+/*   Updated: 2024/05/11 18:01:58 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char	*ft_uitoa(unsigned int n)
+static void	ft_uitoa(t_data *data, long unsigned n, int numlen)
 {
-	char			*str;
-	int				num_len;
+	char	*str;
 
-	num_len = num_digits(n, 10);
-	str = ft_calloc(num_len + 1, sizeof(char));
+	if (!data)
+		return ;
+	str = (char *)ft_calloc(numlen + 1, 1);
 	if (!str)
-		return (NULL);
-	while (num_len > 0)
+		return ;
+	if (n == 0)
+		str[0] = '0';
+	while (n > 0)
 	{
-		str[num_len - 1] = n % 10 + '0';
+		str[numlen - 1] = n % 10 + '0';
 		n /= 10;
-		num_len--;
+		numlen--;
 	}
-	return (str);
+	append(data->strnum, str, data->flags.prec);
+	free(str);
 }
 
-int	print_u(t_flags *flags, va_list ap)
+static int	u_string(t_data *data, long unsigned n)
 {
-	int				strlen;
-	int				len;
-	char			*numstr;
-	unsigned int	i;
+	int	width;
+	int	prec;
+	int	width_pad;
+	int	prec_pad;
 
-	i = va_arg(ap, unsigned int);
-	numstr = ft_uitoa(i);
-	strlen = ft_strlen(numstr);
-	if (flags->prec_val < strlen)
-		flags->prec_val = strlen;
-	if (flags->b_minus)
-		len = print_d_left(flags, numstr);
+	if (!n == 0 && data->flags.prec < data->numlen)
+		data->flags.prec = -1;
+	width = data->flags.width;
+	prec = data->flags.prec;
+	if (prec == 0 && n == 0)
+		width_pad = width;
+	else if (prec > data->numlen)
+		width_pad = width - prec;
 	else
-		len = print_d_right(flags, numstr);
-	free(numstr);
-	return (len);
+		width_pad = width - data->numlen;
+	prec_pad = prec - data->numlen;
+	if (!data->flags.b_minus)
+		pad_out(data, data->strnum, width_pad, 0);
+	pad_out(data, data->strnum, prec_pad, 1);
+	ft_uitoa(data, n, data->numlen);
+	if (data->flags.b_minus)
+		pad_out(data, data->strnum, width_pad, 0);
+	return (to_buf(data, data->strnum));
+}
+
+int	ft_printu(t_data *data)
+{
+	long unsigned	n;
+	int				ret;
+
+	n = va_arg(data->ap, unsigned int);
+	data->numlen = num_digits(n, 10);
+	data->varg_len = max(data->flags.prec, data->flags.width);
+	data->varg_len = max(data->varg_len, data->numlen) + 1;
+	data->strnum = (char *)ft_calloc(data->varg_len, 1);
+	if (!data->strnum)
+		return (1);
+	ret = u_string(data, n);
+	free(data->strnum);
+	return (ret);
 }

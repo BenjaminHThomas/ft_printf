@@ -5,77 +5,86 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/25 14:18:25 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/28 21:34:10 by bthomas          ###   ########.fr       */
+/*   Created: 2024/05/09 09:44:39 by bthomas           #+#    #+#             */
+/*   Updated: 2024/05/12 15:22:03 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	get_xlen(t_flags *flags, unsigned int n)
+static void	append_hash(t_data *data)
 {
-	int	numlen;
-	int	maxflag;
+	char	spec;
 
-	numlen = num_digits(n, 16);
-	maxflag = max(flags->prec_val, flags->width_val);
-	return (max(maxflag, numlen));
+	spec = data->flags.specifier;
+	if (!data->flags.b_hash)
+		return ;
+	if (spec == 'x')
+		append(data->strnum, "0x", -1);
+	else
+		append(data->strnum, "0X", -1);
 }
 
-static void	create_xstr(char **xstr, unsigned int n, char *base, t_flags *flags)
+static int	get_xpadlen(t_data *data, unsigned int n, int is_prec)
 {
-	int	strlen;
-	int	hash;
+	int	prec;
+	int	width;
 
-	hash = (2 * flags->b_hash) * (n != 0);
-	strlen = max(flags->prec_val, num_digits(n, 16)) + hash - 1;
-	if (hash)
+	prec = data->flags.prec;
+	width = data->flags.width;
+	if (is_prec)
+		return (prec - data->numlen);
+	if (data->flags.prec == 0 && n == 0)
 	{
-		(*xstr)[0] = '0';
-		(*xstr)[1] = flags->specifier;
+		data->flags.b_hash = 0;
+		return (data->flags.width);
 	}
-	while (n != 0 && strlen >= hash)
-	{
-		(*xstr)[strlen] = base[n % 16];
-		n /= 16;
-		strlen--;
-	}
-	while (strlen >= hash)
-	{
-		(*xstr)[strlen] = '0';
-		strlen--;
-	}
+	else if (data->flags.prec > data->numlen)
+		return (width - prec - 2 * (data->flags.b_hash));
+	else
+		return (width - data->numlen - 2 * (data->flags.b_hash));
 }
 
-static char	*x_string(unsigned int n, char *base, t_flags *flags)
+static int	x_string(t_data *data, unsigned int n, char *base)
 {
-	char	*xstr;
-	int		numlen;
+	int	width_pad;
+	int	prec_pad;
 
-	numlen = get_xlen(flags, n);
-	numlen += (2 * flags->b_hash);
-	xstr = (char *)malloc(numlen * sizeof(char) + 1);
-	if (!xstr)
-		return (NULL);
-	ft_bzero(xstr, numlen + 1);
-	create_xstr(&xstr, n, base, flags);
-	return (xstr);
+	if (!n == 0 && data->flags.prec < data->numlen)
+		data->flags.prec = -1;
+	width_pad = get_xpadlen(data, n, 0);
+	prec_pad = get_xpadlen(data, n, 1);
+	if (!data->flags.b_minus && !data->flags.b_zero)
+		pad_out(data, data->strnum, width_pad, 0);
+	append_hash(data);
+	if (!data->flags.b_minus && data->flags.b_zero)
+		pad_out(data, data->strnum, width_pad, 0);
+	pad_out(data, data->strnum, prec_pad, 1);
+	if (data->flags.prec != 0)
+		ft_atoi_base(data, n, base);
+	if (data->flags.b_minus)
+		pad_out(data, data->strnum, width_pad, 0);
+	return (to_buf(data, data->strnum));
 }
 
-int	print_x(t_flags *flags, va_list ap)
+int	ft_printx(t_data *data)
 {
 	unsigned int	x;
-	char			*xstr;
 	char			*base;
+	int				ret;
 
-	if (flags->specifier == 'X')
+	x = va_arg(data->ap, unsigned int);
+	data->numlen = num_digits(x, 16);
+	if (data->flags.specifier == 'X')
 		base = HEX_UP;
 	else
 		base = HEX_BASE;
-	x = va_arg(ap, unsigned int);
-	xstr = x_string(x, base, flags);
-	if (flags->b_minus)
-		return (print_p_left(flags, xstr));
-	else
-		return (print_p_right(flags, xstr));
+	data->varg_len = max(data->flags.prec, data->flags.width);
+	data->varg_len = max(data->varg_len, data->numlen) + 2;
+	data->strnum = (char *)ft_calloc(data->varg_len + 1, 1);
+	if (x == 0)
+		data->flags.b_hash = 0;
+	ret = x_string(data, x, base);
+	free(data->strnum);
+	return (ret);
 }
