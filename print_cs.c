@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 09:39:37 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/12 19:26:24 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/13 09:27:08 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,22 @@
 static int	cs_out(t_data *data)
 {
 	char	*out;
-	int		prec;
 	int		width;
 	int		ret;
 
 	width = data->flags.width;
-	prec = data->flags.prec;
-	if (prec != -1 && prec < data->numlen)
-		data->numlen = prec;
 	out = (char *)ft_calloc(max(width, data->numlen) + 1, 1);
 	if (!out)
 		return (1);
 	if (data->flags.b_minus)
 	{
-		append(out, data->strnum, data->flags.prec);
+		append(data, out, data->strnum, 0);
 		pad_out(data, out, width - data->numlen, 0);
 	}
 	else
 	{
 		pad_out(data, out, width - data->numlen, 0);
-		append(out, data->strnum, data->flags.prec);
+		append(data, out, data->strnum, 0);
 	}
 	ret = to_buf(data, out);
 	free(out);
@@ -47,6 +43,8 @@ int	ft_prints(t_data *data)
 	int		b_null;
 
 	b_null = 0;
+	if (data->flags.prec == 0 && !data->flags.width)
+		return (0);
 	data->strnum = va_arg(data->ap, char *);
 	if (!data->strnum)
 	{
@@ -58,7 +56,9 @@ int	ft_prints(t_data *data)
 			return (1);
 		ft_strlcpy(data->strnum, "(null)", 7);
 	}
-	data->numlen = ft_strlen(data->strnum) * (data->flags.prec != 0);
+	if (data->flags.prec == -1)
+		data->flags.prec = ft_strlen(data->strnum);
+	data->numlen = min(ft_strlen(data->strnum), data->flags.prec);
 	ret = cs_out(data);
 	if (b_null)
 		free(data->strnum);

@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 09:43:38 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/11 18:01:58 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/13 08:54:30 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	ft_uitoa(t_data *data, long unsigned n, int numlen)
 		n /= 10;
 		numlen--;
 	}
-	append(data->strnum, str, data->flags.prec);
+	append(data, data->strnum, str, 0);
 	free(str);
 }
 

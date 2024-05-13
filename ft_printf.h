@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 18:20:12 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/11 19:58:31 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/13 08:55:13 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ int		in(char const *s, char c);
 int		buf_fmt_back(t_data *data);
 int		to_buf(t_data *data, char *s);
 int		max(int i1, int i2);
-int		append(char *body, char *att, int limit);
+int		min(int n1, int n2);
+int		append(t_data *data, char *body, char *att, int is_pad);
 int		get_padder(t_data *data);
 void	pad_out(t_data *data, char *out, int n, int is_prec);
 int		get_prefix(t_data *data);

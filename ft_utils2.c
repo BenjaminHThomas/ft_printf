@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 12:35:44 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/12 19:57:55 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/13 09:25:59 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ void	pad_out(t_data *data, char *out, int n, int is_prec)
 {
 	char	padchar;
 	char	*padstr;
+	char	spec;
 
 	if (!data || !out || n <= 0)
 		return ;
-	if (is_prec && in("dipuxX", data->flags.specifier))
+	spec = data->flags.specifier;
+	if (is_prec && in("dipuxX", spec))
 		padchar = '0';
-	else if (!is_prec && in("diu", data->flags.specifier))
-		padchar = 32;
 	else
 		padchar = get_padder(data);
 	padstr = (char *)ft_calloc(n + 1, 1);
@@ -30,7 +30,7 @@ void	pad_out(t_data *data, char *out, int n, int is_prec)
 		return ;
 	while (n--)
 		padstr[n] = padchar;
-	append(out, padstr, -1);
+	append(data, out, padstr, 1);
 	free(padstr);
 }
 
@@ -39,8 +39,12 @@ int	get_padder(t_data *data)
 	char	spec;
 
 	spec = data->flags.specifier;
+	if (in("dipuxX", spec) && data->flags.prec > 0)
+		return (32);
 	if (in("dipuxX", spec))
 	{
+		if (data->flags.prec >= 0)
+			return (32);
 		if (data->flags.b_zero && !data->flags.b_minus)
 			return ('0');
 	}
@@ -77,4 +81,12 @@ int	num_digits(unsigned long int n, int base)
 		numlen++;
 	}
 	return (numlen);
+}
+
+int	min(int n1, int n2)
+{
+	if (n1 < n2)
+		return (n1);
+	else
+		return (n2);
 }

@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 10:04:41 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/12 19:47:10 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/13 08:57:12 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@ int	out_d_prefix(t_data *data, char *out)
 		return (0);
 	if (*data->strnum == '-')
 	{
-		append(out, "-", -1);
-		return (1);
+		append(data, out, "-", 0);
+		return (0);
 	}
 	else if (data->flags.b_plus)
 	{
-		append(out, "+", -1);
+		append(data, out, "+", 0);
 		return (1);
 	}
 	else if (data->flags.b_space)
 	{
-		append(out, " ", -1);
+		append(data, out, " ", 0);
 		return (1);
 	}
 	return (0);
@@ -75,7 +75,7 @@ static int	di_left(t_data *data)
 	prec_pad = data->flags.prec - data->numlen
 		+ (*data->strnum == '-');
 	pad_out(data, out, prec_pad, 1);
-	append(out, data->strnum + (*data->strnum == '-'), data->flags.prec);
+	append(data, out, data->strnum + (*data->strnum == '-'), 0);
 	pad_out(data, out, width_pad, 0);
 	res = to_buf(data, out);
 	free(out);
@@ -94,18 +94,18 @@ static int	di_right(t_data *data)
 	if (!out)
 		return (1);
 	extra_char = ((data->flags.b_space || data->flags.b_plus)
-			&& !(*data->strnum == '-')) + (*data->strnum == '-');
+			&& !(*data->strnum == '-'));
 	width_pad = data->flags.width - max(data->numlen, data->flags.prec)
 		- extra_char;
-	prec_pad = data->flags.prec - data->numlen
-		+ (*data->strnum == '-');
-	if (width_pad && data->flags.b_zero)
+	prec_pad = max(data->flags.prec - data->numlen
+			+ (*data->strnum == '-'), 0);
+	if (get_padder(data) == '0')
 		out_d_prefix(data, out);
 	pad_out(data, out, width_pad, 0);
-	if (!(width_pad && data->flags.b_zero))
+	if (get_padder(data) == ' ')
 		out_d_prefix(data, out);
 	pad_out(data, out, prec_pad, 1);
-	append(out, data->strnum + (*data->strnum == '-'), data->flags.prec);
+	append(data, out, data->strnum + (*data->strnum == '-'), 0);
 	res = to_buf(data, out);
 	free(out);
 	return (res);
@@ -120,10 +120,14 @@ int	ft_printdi(t_data *data)
 	data->strnum = ft_itoa(d);
 	data->numlen = ft_strlen(data->strnum);
 	if (d == 0 && data->flags.prec == 0)
+	{
 		data->numlen = 0;
-	if (d !=0 && data->flags.prec < data->numlen)
-		data->flags.prec = -1;
+		data->strnum[0] = 0;
+	}
 	data->varg_len = get_len_di(data);
+	if (*data->strnum == '-' && data->flags.prec > 0)
+		if (data->flags.width)
+			data->flags.width--;
 	if (data->varg_len && data->flags.b_minus)
 		res = di_left(data);
 	else if (data->varg_len)

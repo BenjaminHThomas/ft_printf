@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 09:44:39 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/12 15:22:03 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/13 08:54:56 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static void	append_hash(t_data *data)
 	if (!data->flags.b_hash)
 		return ;
 	if (spec == 'x')
-		append(data->strnum, "0x", -1);
+		append(data, data->strnum, "0x", 0);
 	else
-		append(data->strnum, "0X", -1);
+		append(data, data->strnum, "0X", 0);
 }
 
 static int	get_xpadlen(t_data *data, unsigned int n, int is_prec)

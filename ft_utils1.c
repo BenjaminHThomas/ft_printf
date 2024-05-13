@@ -6,23 +6,28 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 13:29:56 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/12 19:45:23 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/13 08:52:38 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /* Shared utility functions */
 #include "ft_printf.h"
 
-int	append(char *body, char *att, int limit)
+int	append(t_data *data, char *body, char *att, int is_pad)
 {
 	int	i;
 	int	j;
+	int	limit;
 
 	if (!body || !att)
 		return (1);
 	i = ft_strlen(body);
 	j = 0;
-	if (limit == -1)
+	if (is_pad || data->flags.prec == -1)
+		limit = BUFF_SIZE;
+	else
+		limit = data->flags.prec;
+	if (in("dixX", data->flags.specifier) && limit < ft_strlen(att))
 		limit = BUFF_SIZE;
 	while (att[j] && j < limit)
 	{

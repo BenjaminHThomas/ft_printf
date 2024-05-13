@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 09:42:23 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/12 14:25:55 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/13 08:54:13 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_atoi_base(t_data *data, long unsigned n, char *base)
 		numlen--;
 	}
 	str[numlen - 1] = base[n % 16];
-	append(data->strnum, str, -1);
+	append(data, data->strnum, str, 0);
 	free(str);
 }
 
@@ -51,7 +51,7 @@ static int	create_pstr(t_data *data, long unsigned n)
 	if (!data->flags.b_zero && !data->flags.b_minus)
 		pad_out(data, data->strnum, width_pad, 0);
 	out_d_prefix(data, data->strnum);
-	append(data->strnum, "0x", -1);
+	append(data, data->strnum, "0x", 0);
 	if (data->flags.b_zero && !data->flags.b_minus)
 		pad_out(data, data->strnum, width_pad, 0);
 	pad_out(data, data->strnum, prec_pad, 1);
@@ -77,7 +77,7 @@ int	ft_printp(t_data *data)
 		data->flags.b_zero = 0;
 		if (!data->flags.b_minus)
 			pad_out(data, data->strnum, data->flags.width - 5, 0);
-		append(data->strnum, "(nil)", -1);
+		append(data, data->strnum, "(nil)", 0);
 		if (data->flags.b_minus)
 			pad_out(data, data->strnum, data->flags.width - 5, 0);
 		ret = to_buf(data, data->strnum);
