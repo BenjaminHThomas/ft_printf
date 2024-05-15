@@ -116,6 +116,7 @@ int	ft_printdi(t_data *data)
 	int		d;
 	int		res;
 
+	res = 0;
 	d = va_arg(data->ap, int);
 	data->strnum = ft_itoa(d);
 	data->numlen = ft_strlen(data->strnum);

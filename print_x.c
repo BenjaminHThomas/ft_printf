@@ -60,7 +60,7 @@ static int	x_string(t_data *data, unsigned int n, char *base)
 	if (!data->flags.b_minus && data->flags.b_zero)
 		pad_out(data, data->strnum, width_pad, 0);
 	pad_out(data, data->strnum, prec_pad, 1);
-	if (data->flags.prec < data->numlen && n!= 0)
+	if (data->flags.prec < data->numlen && n != 0)
 		data->flags.prec = -1;
 	if (data->flags.prec != 0)
 		ft_atoi_base(data, n, base);

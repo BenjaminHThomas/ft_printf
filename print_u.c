@@ -40,8 +40,6 @@ static int	u_string(t_data *data, long unsigned n)
 	int	width_pad;
 	int	prec_pad;
 
-	if (!n == 0 && data->flags.prec < data->numlen)
-		data->flags.prec = -1;
 	width = data->flags.width;
 	prec = data->flags.prec;
 	if (prec == 0 && n == 0)
@@ -54,6 +52,8 @@ static int	u_string(t_data *data, long unsigned n)
 	if (!data->flags.b_minus)
 		pad_out(data, data->strnum, width_pad, 0);
 	pad_out(data, data->strnum, prec_pad, 1);
+	if (!n == 0 && data->flags.prec < data->numlen)
+		data->flags.prec = -1;
 	ft_uitoa(data, n, data->numlen);
 	if (data->flags.b_minus)
 		pad_out(data, data->strnum, width_pad, 0);
