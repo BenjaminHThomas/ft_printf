@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 09:42:23 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/13 08:54:13 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/15 19:50:41 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ static int	create_pstr(t_data *data, long unsigned n)
 
 	prec = data->flags.prec;
 	width = data->flags.width;
-	numlen = num_digits(n, 16);
-	data->numlen = numlen;
+	numlen = data->numlen;
 	width_pad = width - (max(numlen, prec) + 2) - (get_prefix(data) != 0);
 	prec_pad = prec - numlen;
+	data->flags.prec = -1;
 	if (!data->flags.b_zero && !data->flags.b_minus)
 		pad_out(data, data->strnum, width_pad, 0);
 	out_d_prefix(data, data->strnum);
@@ -72,12 +72,13 @@ int	ft_printp(t_data *data)
 	data->strnum = (char *)ft_calloc(data->varg_len + 1, 1);
 	if (!data->strnum)
 		return (1);
+	data->numlen = num_digits(n, 16);
 	if (!n)
 	{
 		data->flags.b_zero = 0;
 		if (!data->flags.b_minus)
 			pad_out(data, data->strnum, data->flags.width - 5, 0);
-		append(data, data->strnum, "(nil)", 0);
+		append(data, data->strnum, "(nil)", 1);
 		if (data->flags.b_minus)
 			pad_out(data, data->strnum, data->flags.width - 5, 0);
 		ret = to_buf(data, data->strnum);
