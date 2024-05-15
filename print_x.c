@@ -31,6 +31,8 @@ static int	get_xpadlen(t_data *data, unsigned int n, int is_prec)
 	int	width;
 
 	prec = data->flags.prec;
+	if (prec != 0 && prec < data->numlen)
+		prec = -1;
 	width = data->flags.width;
 	if (is_prec)
 		return (prec - data->numlen);
@@ -50,8 +52,6 @@ static int	x_string(t_data *data, unsigned int n, char *base)
 	int	width_pad;
 	int	prec_pad;
 
-	if (!n == 0 && data->flags.prec < data->numlen)
-		data->flags.prec = -1;
 	width_pad = get_xpadlen(data, n, 0);
 	prec_pad = get_xpadlen(data, n, 1);
 	if (!data->flags.b_minus && !data->flags.b_zero)
@@ -60,6 +60,8 @@ static int	x_string(t_data *data, unsigned int n, char *base)
 	if (!data->flags.b_minus && data->flags.b_zero)
 		pad_out(data, data->strnum, width_pad, 0);
 	pad_out(data, data->strnum, prec_pad, 1);
+	if (data->flags.prec < data->numlen && n!= 0)
+		data->flags.prec = -1;
 	if (data->flags.prec != 0)
 		ft_atoi_base(data, n, base);
 	if (data->flags.b_minus)

@@ -37,13 +37,13 @@ void	pad_out(t_data *data, char *out, int n, int is_prec)
 int	get_padder(t_data *data)
 {
 	char	spec;
+	int		prec;
 
+	prec = data->flags.prec;
 	spec = data->flags.specifier;
-	if (in("dipuxX", spec) && data->flags.prec > 0)
-		return (32);
 	if (in("dipuxX", spec))
 	{
-		if (data->flags.prec >= 0)
+		if (prec >= 0)
 			return (32);
 		if (data->flags.b_zero && !data->flags.b_minus)
 			return ('0');

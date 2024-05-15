@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 10:04:41 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/13 08:57:12 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/13 14:54:45 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int	ft_printdi(t_data *data)
 		data->strnum[0] = 0;
 	}
 	data->varg_len = get_len_di(data);
-	if (*data->strnum == '-' && data->flags.prec > 0)
+	if (*data->strnum == '-' && data->flags.prec > data->numlen)
 		if (data->flags.width)
 			data->flags.width--;
 	if (data->varg_len && data->flags.b_minus)
