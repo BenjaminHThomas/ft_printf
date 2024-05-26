@@ -6,7 +6,7 @@
 #    By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/14 14:29:18 by bthomas           #+#    #+#              #
-#    Updated: 2024/05/26 16:10:38 by bthomas          ###   ########.fr        #
+#    Updated: 2024/05/26 16:18:15 by bthomas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ $(OBJ_DIR)%.o: %.c
 	$(COMPILER) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OFILES) $(LIBFT)
-	$(AR) $(ARFLAGS) $(NAME) $(OFILES) $(LIBFT_PATH)*.o
+	$(AR) $(ARFLAGS) $(NAME) $(OFILES) $(LIBFT)
 
 clean:
 	echo "Cleaning objects..."

@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 13:29:56 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/13 08:52:38 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/26 16:17:14 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	append(t_data *data, char *body, char *att, int is_pad)
 		limit = BUFF_SIZE;
 	else
 		limit = data->flags.prec;
-	if (in("dixX", data->flags.specifier) && limit < ft_strlen(att))
+	if (in("dixX", data->flags.specifier) && limit < (int)ft_strlen(att))
 		limit = BUFF_SIZE;
 	while (att[j] && j < limit)
 	{
