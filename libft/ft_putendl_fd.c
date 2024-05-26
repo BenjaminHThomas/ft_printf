@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 10:57:30 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/08 11:01:39 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/26 15:52:07 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,7 @@
 
 void	ft_putendl_fd(char const *s, int fd)
 {
-	while (*s)
-	{
-		write(fd, &(*s), 1);
-		s++;
-	}
+	write(fd, s, ft_strlen(s));
 	write(fd, "\n", 1);
 }
 /*

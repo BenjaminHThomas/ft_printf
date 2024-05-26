@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 13:44:54 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/11 19:58:17 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/15 22:02:39 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ void	buf_fmt(t_data *data, int n)
 /* print backwards all chars between & including index and most recent % */
 int	buf_fmt_back(t_data *data)
 {
-	int	i;
+	int		i;
 
 	if (!data)
-		return (-1);
+		return (1);
 	i = data->fmt_idx;
 	while (data->fmt_idx >= 0 && data->fmt[data->fmt_idx] != '%')
 		data->fmt_idx--;

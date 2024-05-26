@@ -34,13 +34,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	while (istrimmed(*s1, set) && *s1)
 		s1++;
 	if (!*s1)
-	{
-		dest = (char *)malloc(1);
-		if (!dest)
-			return (NULL);
-		dest[0] = 0;
-		return (dest);
-	}
+		return (ft_strdup(""));
 	endpos = ft_strlen(s1);
 	while (istrimmed(s1[endpos - 1], set) && s1[endpos - 1])
 		endpos--;

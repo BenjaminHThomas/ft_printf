@@ -1,44 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/30 16:09:14 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/14 19:01:42 by bthomas          ###   ########.fr       */
+/*   Created: 2024/04/09 12:36:41 by bthomas           #+#    #+#             */
+/*   Updated: 2024/05/22 14:26:16 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-/*#include <stddef.h>
-#include <string.h>*/
 
-char	*ft_strrchr(const char *s, int c)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	char			*ps;
-	unsigned char	c2;
+	t_list	*plst;
 
-	c2 = (unsigned char)c;
-	ps = (char *)s + ft_strlen(s);
-	if (c2 == '\0')
-		return (ps);
-	while (ps >= s)
+	if (*lst == NULL)
 	{
-		if (*ps == c2)
-			return (ps);
-		ps--;
+		*lst = new;
+		return ;
 	}
-	ps = NULL;
-	return (ps);
+	plst = *lst;
+	while (plst -> next)
+		plst = plst -> next;
+	plst -> next = new;
 }
 /*
+#include <string.h>
 #include <stdio.h>
-
 int	main(void)
 {
-	char *str = ft_strrchr("teste", 'a');
-	char *str2 = strrchr("teste", 'a');
-	printf("mine: %s\nreal: %s", str, str2);
+	t_list *l = ft_lstnew(strdup("nyacat"));
+	t_list *n = ft_lstnew(strdup("OK"));
+	ft_lstadd_back(&l, n);
+	if (l->next == n && !strcmp(l->next->content, "OK"))
+		printf("success!");
+	else
+		printf("failure!");
 	return (0);
 }*/

@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 09:29:03 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/12 10:10:55 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/23 15:02:09 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,40 +16,36 @@
 
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	const char	*plit;
-	const char	*pbig;
+	size_t	i;
+	size_t	j;
 
-	if (little[0] == 0)
+	if (!ft_strlen(little))
 		return ((char *)big);
-	while (*big && len)
+	i = 0;
+	while (big[i] && i < len)
 	{
-		plit = little;
-		while (*big != *little && len && *big++)
-			len--;
-		if (*big == *little && len)
-		{
-			pbig = big;
-			while (*big == *plit && len && *big && *plit)
-			{
-				big++;
-				plit++;
-				len--;
-			}
-		}
-		if (!*plit)
-			return ((char *)pbig);
+		while (big[i] != *little && i < len)
+			i++;
+		if (len <= 0)
+			break ;
+		j = 0;
+		while (big[i + j] && little[j] && big[i + j] == little[j]
+			&& (i + j) < len)
+			j++;
+		if (j == ft_strlen(little))
+			return ((char *)big + i);
+		i++;
 	}
-	return (NULL);
+	return (0);
 }
 /*
 #include <stdio.h>
 int	main(void)
 {
-	char	*big = "oh no not the empty string!";
+	char	*big = "lorem ipsum dolor sit amet";
 	char	*little = "";
-	char	*big_mine;
-	big_mine = ft_strnstr(big, little, 20);
-	printf("Mine: %s", big_mine);
+	char	*big_mine = ft_strnstr(big, little, 17);
+	char	*real = strnstr(big, little, 17);
+	printf("Mine: %s\nReal: %s", big_mine, real);
 	return (0);
-}
-*/
+}*/

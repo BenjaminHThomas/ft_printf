@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 14:26:22 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/14 16:33:05 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/14 19:10:02 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,10 @@ void	*ft_calloc(size_t nmemb, size_t size)
 {
 	void	*p;
 
-	if (nmemb == 0 || size == 0)
-	{
-		nmemb = 1;
-		size = 1;
-	}
 	p = malloc(nmemb * size);
 	if (!p)
 		return (NULL);
-	ft_bzero(p, nmemb);
+	ft_bzero(p, nmemb * size);
 	return (p);
 }
 /*
@@ -46,5 +41,4 @@ int	main(void)
 	free(d1);
 	free(d2);
 	return (0);
-}
-*/
+}*/

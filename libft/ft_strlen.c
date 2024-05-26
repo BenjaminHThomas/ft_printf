@@ -6,11 +6,13 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:50:07 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/11 11:14:41 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/23 15:01:18 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strlen(const char *s)
+#include "libft.h"
+
+size_t	ft_strlen(const char *s)
 {
 	int	len;
 

@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 09:42:23 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/15 19:50:41 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/15 22:18:37 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	ft_atoi_base(t_data *data, long unsigned n, char *base)
 	if (!data)
 		return ;
 	numlen = data->numlen;
-	str = (char *)ft_calloc(numlen + 1, 1);
+	str = (char *)ft_calloc(numlen + 2, 1);
 	if (!str)
 		return ;
-	while (n > 16)
+	while (n > 16 && numlen > 1)
 	{
 		str[numlen - 1] = base[n % 16];
 		n /= 16;

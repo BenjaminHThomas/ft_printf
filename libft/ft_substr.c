@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 15:14:37 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/12 12:11:54 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/14 19:23:38 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,21 @@
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*sub;
+	char	*substr;
 	char	*ps;
 
 	if (!s)
 		return (NULL);
-	if (start > (unsigned int)ft_strlen(s) || len == 0)
-	{
-		ps = (char *)malloc(1 * sizeof(char));
-		if (!ps)
-			return (NULL);
-		ps[0] = 0;
-		return (ps);
-	}
-	if (len > (size_t)ft_strlen(s))
-		len = (size_t)ft_strlen(s);
-	ps = (char *)s;
-	sub = ft_calloc(len + 1, sizeof(char));
-	if (!sub)
+	if (start > (unsigned int)ft_strlen(s))
+		return (ft_strdup(""));
+	ps = (char *)s + start;
+	if (len > (size_t)ft_strlen(ps))
+		len = (size_t)ft_strlen(ps);
+	substr = ft_calloc(len + 1, sizeof(char));
+	if (!substr)
 		return (NULL);
-	ft_strlcpy(sub, ps + start, len + 1);
-	return (sub);
+	ft_strlcpy(substr, ps, len + 1);
+	return (substr);
 }
 /*
 #include <stdio.h>

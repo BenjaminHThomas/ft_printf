@@ -6,13 +6,47 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 11:11:17 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/12 15:27:54 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/21 20:40:07 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 /*#include <stdlib.h>
 #include <string.h>*/
+
+static char	**free_list(char **wlist)
+{
+	int	i;
+
+	i = 0;
+	while (wlist[i])
+	{
+		free(wlist[i]);
+		i++;
+	}
+	free(wlist);
+	return (NULL);
+}
+
+static int	count_words(const char *s, char c)
+{
+	int	wcount;
+	int	i;
+
+	if (!s)
+		return (0);
+	wcount = 0;
+	i = 0;
+	while (s[i])
+	{
+		if (i == 0 && s[i] != c)
+			wcount++;
+		else if (s[i] != c && s[i - 1] == c)
+			wcount++;
+		i++;
+	}
+	return (wcount);
+}
 
 static char	*get_word(const char *s, int *start, char c)
 {
@@ -24,7 +58,7 @@ static char	*get_word(const char *s, int *start, char c)
 	while (s[end] && s[end] != c)
 		end++;
 	i = 0;
-	word = (char *)malloc((end - *start + 1) * sizeof(char));
+	word = (char *)ft_calloc((end - *start + 1), sizeof(char));
 	if (!word)
 		return (NULL);
 	while (*start < end)
@@ -33,8 +67,18 @@ static char	*get_word(const char *s, int *start, char c)
 		i++;
 		(*start)++;
 	}
-	word[i] = 0;
 	return (word);
+}
+
+static char	**null_wlist(void)
+{
+	char	**wlist;
+
+	wlist = malloc(sizeof(char *));
+	if (!wlist)
+		return (NULL);
+	*wlist = NULL;
+	return (wlist);
 }
 
 char	**ft_split(char const *s, char c)
@@ -44,10 +88,10 @@ char	**ft_split(char const *s, char c)
 	int		i;
 
 	if (!s)
-		return (NULL);
-	wlist = (char **)malloc((ft_strlen(s) + 1) * sizeof(char *));
+		return (null_wlist());
+	wlist = ft_calloc((count_words(s, c) + 1), sizeof(*wlist));
 	if (!wlist)
-		return (NULL);
+		return (null_wlist());
 	start = 0;
 	i = 0;
 	while (s[start])
@@ -57,19 +101,17 @@ char	**ft_split(char const *s, char c)
 		if (!s[start])
 			continue ;
 		wlist[i] = get_word(s, &start, c);
+		if (!wlist[i])
+			return (free_list(wlist));
 		i++;
 	}
-	wlist[i] = 0;
 	return (wlist);
 }
 /*
 #include <stdio.h>
 int	main(void)
-{
-	char	str[] = "   lorem   ipsum dolor     sit amet,"
-					"consectetur   adipiscing elit. Sed non risus. Suspendisse   ";
-	char	c = ' ';
-	char	**wlist = ft_split(str, c);
+{;
+	char	**wlist = ft_split("hello! ", ' ');
 	int		i;
 
 	i = 0;
@@ -78,6 +120,12 @@ int	main(void)
 		printf("%s\n", wlist[i]);
 		i++;
 	}
+	i = 0;
+	while (wlist[i])
+	{
+		free(wlist[i]);
+		i++;
+	}
+	free(wlist);
 	return (0);
-}
-*/
+}*/

@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 11:09:27 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/08 11:23:45 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/14 17:14:28 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_putnbr_fd(int n, int fd)
 		write(fd, "-", 1);
 		n2 *= -1;
 	}
-	if (n2 > 10)
+	if (n2 >= 10)
 		ft_putnbr_fd(n2 / 10, fd);
 	c = n2 % 10 + '0';
 	write(fd, &c, 1);
@@ -31,7 +31,6 @@ void	ft_putnbr_fd(int n, int fd)
 /*
 int	main(void)
 {
-	ft_putnbr_fd(-2147483648, 1);
+	ft_putnbr_fd(-10000043, 1);
 	return (0);
-}
-*/
+}*/

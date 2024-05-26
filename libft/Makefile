@@ -6,11 +6,15 @@
 #    By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/29 11:11:38 by bthomas           #+#    #+#              #
-#    Updated: 2024/04/14 15:44:44 by bthomas          ###   ########.fr        #
+#    Updated: 2024/05/26 16:04:37 by bthomas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFILES	= ft_bzero.c \
+NAME = libft.a
+CC = cc
+CFLAGS = -Wall -Wextra -Werror
+
+SRCS	= ft_bzero.c \
 		  ft_isalnum.c \
 		  ft_isascii.c \
 		  ft_isprint.c \
@@ -43,40 +47,44 @@ CFILES	= ft_bzero.c \
 		  ft_putstr_fd.c \
 		  ft_putendl_fd.c \
 		  ft_putnbr_fd.c \
-		  ft_lstnew.c \
-		  ft_lstadd_front.c \
-		  ft_lstsize.c \
-		  ft_lstlast.c \
-		  ft_lstadd_back.c \
-		  ft_lstclear.c \
-		  ft_lstiter.c \
-		  ft_lstmap.c \
-		  ft_lstdelone.c \
 		  ft_tolower.c
 
-OFILES = $(CFILES:.c=.o)
+BONUS_SRCS = ft_lstnew_bonus.c \
+		  ft_lstadd_front_bonus.c \
+		  ft_lstsize_bonus.c \
+		  ft_lstlast_bonus.c \
+		  ft_lstadd_back_bonus.c \
+		  ft_lstclear_bonus.c \
+		  ft_lstiter_bonus.c \
+		  ft_lstmap_bonus.c \
+		  ft_lstdelone_bonus.c
 
-CFLAGS = -Wall -Werror -Wextra
+OBJDIR = obj/
+OBJS = $(addprefix $(OBJDIR), $(SRCS:.c=.o))
+BONUS_OBJS = $(addprefix $(OBJDIR), $(BONUS_SRCS:.c=.o))
 
-NAME = libft.a
+all: $(OBJDIR) $(NAME)
 
-COMPILER = gcc
+$(OBJDIR)%.o: %.c | $(OBJDIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME):
-	$(COMPILER) $(CFLAGS) -c $(CFILES) -I./
-	ar -rc $(NAME) $(OFILES)
+$(OBJDIR):
+	@mkdir -p $(OBJDIR)
 
-all: $(NAME)
+$(NAME): $(OBJS)
+	ar rc $(NAME) $^
 
-bonus: all
+bonus: $(OBJS) $(BONUS_OBJS)
+	ar rc $(NAME) $^
 
 clean:
-	rm -f $(NAME)
-	rm -f $(OFILES)
+	@echo "Cleaning object files..."
+	@rm -rf $(OBJDIR)
 
 fclean: clean
-	rm -f $(NAME)
+	@echo "Removing program..."
+	@rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: all, clean, flcean, re
+.PHONY: all clean fclean re bonus

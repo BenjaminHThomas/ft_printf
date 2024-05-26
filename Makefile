@@ -6,7 +6,7 @@
 #    By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/14 14:29:18 by bthomas           #+#    #+#              #
-#    Updated: 2024/05/09 12:35:54 by bthomas          ###   ########.fr        #
+#    Updated: 2024/05/26 16:10:38 by bthomas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,39 +27,42 @@ OBJ_DIR			= objs
 OFILES			= $(addprefix $(OBJ_DIR)/,$(CFILES:.c=.o))
 
 CFLAGS			= -Wall -Werror -Wextra -g3
-COMPILER		= gcc
+COMPILER		= cc
 AR				= ar
 ARFLAGS			= rcs
 
-LIBFT_PATH		= ./libft
-LIBFT_OBJ_DIR	= $(LIBFT_PATH)/$(OBJ_DIR)
-LIBFT_CFILES	= $(wildcard $(LIBFT_PATH)/*.c)
-LIBFT_OFILES	= $(addprefix $(LIBFT_OBJ_DIR)/,$(notdir $(LIBFT_CFILES:.c=.o)))
+LIBFT_LIB		= libft.a
+LIBFT_PATH		= ./libft/
+LIBFT			= $(LIBFT_PATH)$(LIBFT_LIB)
+
+all: $(OBJ_DIR) $(LIBFT) $(NAME)
+
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
 
 $(OBJ_DIR)/%.o: %.c
-	@mkdir -p $(@D)
 	$(COMPILER) $(CFLAGS) -c $< -o $@
 
-$(LIBFT_OBJ_DIR)/%.o: $(LIBFT_PATH)/%.c
-	@mkdir -p $(@D)
+$(LIBFT):
+	echo "Making libft..."
+	@$(MAKE) -C $(LIBFT_PATH)
+
+$(OBJ_DIR)%.o: %.c
 	$(COMPILER) $(CFLAGS) -c $< -o $@
 
-$(NAME): $(OFILES) $(LIBFT_OFILES)
-	$(AR) $(ARFLAGS) $@ $^
-
-all: $(NAME)
-
-bonus: all
+$(NAME): $(OFILES) $(LIBFT)
+	$(AR) $(ARFLAGS) $(NAME) $(OFILES) $(LIBFT_PATH)*.o
 
 clean:
+	echo "Cleaning objects..."
 	@rm -rf $(OBJ_DIR)
-	@rm -rf $(LIBFT_OBJ_DIR)
-	$(MAKE) -C $(LIBFT_PATH) clean
+	@$(MAKE) clean -C $(LIBFT_PATH)
 
 fclean: clean
+	echo "Removing program..."
 	@rm -f $(NAME)
-	$(MAKE) -C $(LIBFT_PATH) fclean
+	@$(MAKE) fclean -C $(LIBFT_PATH)
 
 re: fclean all
 
-.PHONY: all bonus clean fclean re
+.PHONY: all clean fclean re
