@@ -35,7 +35,10 @@ int	ft_printf(const char *format, ...)
 		return (-1);
 	va_start(data.ap, format);
 	if (init_data(&data, format))
+	{
+		va_end(data.ap);
 		return (-1);
+	}
 	ret = parse_fmt(&data);
 	va_end(data.ap);
 	if (ret == 0)

@@ -119,6 +119,8 @@ int	ft_printdi(t_data *data)
 	res = 0;
 	d = va_arg(data->ap, int);
 	data->strnum = ft_itoa(d);
+	if (!data->strnum)
+		return (1);
 	data->numlen = ft_strlen(data->strnum);
 	if (d == 0 && data->flags.prec == 0)
 	{
