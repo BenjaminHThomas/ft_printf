@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static int	cs_out(t_data *data)
+static int	s_tobuff(t_data *data)
 {
 	char	*out;
 	int		width;
@@ -59,7 +59,7 @@ int	ft_prints(t_data *data)
 	if (data->flags.prec == -1)
 		data->flags.prec = ft_strlen(data->strnum);
 	data->numlen = min(ft_strlen(data->strnum), data->flags.prec);
-	ret = cs_out(data);
+	ret = s_tobuff(data);
 	if (b_null)
 		free(data->strnum);
 	return (ret);

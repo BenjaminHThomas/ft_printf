@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 09:43:38 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/13 08:54:30 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/27 14:36:41 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	u_string(t_data *data, long unsigned n)
 	if (!data->flags.b_minus)
 		pad_out(data, data->strnum, width_pad, 0);
 	pad_out(data, data->strnum, prec_pad, 1);
-	if (!n == 0 && data->flags.prec < data->numlen)
+	if (n != 0 && data->flags.prec < data->numlen)
 		data->flags.prec = -1;
 	ft_uitoa(data, n, data->numlen);
 	if (data->flags.b_minus)

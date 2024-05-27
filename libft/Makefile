@@ -6,7 +6,7 @@
 #    By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/29 11:11:38 by bthomas           #+#    #+#              #
-#    Updated: 2024/05/26 16:04:37 by bthomas          ###   ########.fr        #
+#    Updated: 2024/05/27 14:45:39 by bthomas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,11 +78,9 @@ bonus: $(OBJS) $(BONUS_OBJS)
 	ar rc $(NAME) $^
 
 clean:
-	@echo "Cleaning object files..."
 	@rm -rf $(OBJDIR)
 
 fclean: clean
-	@echo "Removing program..."
 	@rm -f $(NAME)
 
 re: fclean all
