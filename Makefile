@@ -6,7 +6,7 @@
 #    By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/14 14:29:18 by bthomas           #+#    #+#              #
-#    Updated: 2024/05/26 16:18:15 by bthomas          ###   ########.fr        #
+#    Updated: 2024/05/27 14:45:16 by bthomas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ OFILES			= $(addprefix $(OBJ_DIR)/,$(CFILES:.c=.o))
 CFLAGS			= -Wall -Werror -Wextra -g3
 COMPILER		= cc
 AR				= ar
-ARFLAGS			= rcs
+ARFLAGS			= rcsT
 
 LIBFT_LIB		= libft.a
 LIBFT_PATH		= ./libft/
@@ -51,7 +51,8 @@ $(OBJ_DIR)%.o: %.c
 	$(COMPILER) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OFILES) $(LIBFT)
-	$(AR) $(ARFLAGS) $(NAME) $(OFILES) $(LIBFT)
+	$(AR) $(ARFLAGS) $(NAME) $(OFILES)
+	$(AR) -rcsT $(NAME) $(LIBFT)
 
 clean:
 	echo "Cleaning objects..."
