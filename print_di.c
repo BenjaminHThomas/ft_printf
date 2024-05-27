@@ -136,7 +136,5 @@ int	ft_printdi(t_data *data)
 	else if (data->varg_len)
 		res = di_right(data);
 	free(data->strnum);
-	data->varg_len = 0;
-	data->numlen = 0;
 	return (res);
 }
