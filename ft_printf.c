@@ -12,15 +12,18 @@
 
 #include "ft_printf.h"
 
-static void	init_data(t_data *data, const char *format)
+static int	init_data(t_data *data, const char *format)
 {
 	data->fmt = format;
 	data->fmt_idx = 0;
 	data->len_out = 0;
-	data->buff = ft_calloc(BUFF_SIZE, 1);
 	data->buf_idx = 0;
 	data->varg_len = 0;
+	data->buff = ft_calloc(BUFF_SIZE, 1);
+	if (!data->buff)
+		return (1);
 	reset_flags(data);
+	return (0);
 }
 
 int	ft_printf(const char *format, ...)
@@ -28,10 +31,11 @@ int	ft_printf(const char *format, ...)
 	t_data	data;
 	int		ret;
 
-	if (!format)
+	if (BUFF_SIZE <= 0)
 		return (-1);
 	va_start(data.ap, format);
-	init_data(&data, format);
+	if (init_data(&data, format))
+		return (-1);
 	ret = parse_fmt(&data);
 	va_end(data.ap);
 	if (ret == 0)
