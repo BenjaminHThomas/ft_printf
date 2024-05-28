@@ -241,5 +241,9 @@ int	main(void)
 	test_x();
 	ft_printf("\n");
 	test_mix();
+	ft_printf("\nNULL check\n");
+	mine = ft_printf(NULL);
+	real = printf(NULL);
+	compare_result();
 	return (0);
 }
