@@ -31,7 +31,7 @@ int	ft_printf(const char *format, ...)
 	t_data	data;
 	int		ret;
 
-	if (BUFF_SIZE <= 0)
+	if (BUFF_SIZE <= 0 || !format)
 		return (-1);
 	va_start(data.ap, format);
 	if (init_data(&data, format))
